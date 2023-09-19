@@ -32,59 +32,46 @@ var array_formations = ["MMI", "TC", "GE2I", "MT2E"]
 
 > Si vous souhaitez définir une constante (variable dont la valeur ne peut pas changer au cours du temps), il suffit juste de mettre "const" devant le type de la variable. Exemple : `const course = "Godot"`.
 
-Bien que facultatif, il est également possible 
-
-### Liste ou tableau ?
-Petit point : En C# (et d'autres langages de programmation), il existe une différence entre les tableaux et les listes. Si les deux permettent de contenir un ensemble d'éléments **du même type**, il existe une subtile différence : la taille d'un tableau (array) est finie. Une fois défini, il n'est pas possible d'ajouter ou retirer des éléments à un tableau (c'est possible, mais très coûteux en performance). Alors qu'une liste a une dimension dynamique. Ce qui fait qu'une liste occupe plus de place en mémoire (RAM) qu'un tableau, de ce fait, utilisez le bon type pour la bonne situation. 
-
-```cs
-// Equivalent du code ci-dessus mais avec une liste, nous pouvons donc ajouter ou retirer des éléments grâce aux méthodes .Add() et .Remove() ou même en remplacer à un index précis grâce à la méthode .Insert(int index, valeur).
-List<string> listeFormations = new List<string>(){"MMI", "TC", "GE2I", "MT2E"};
+Bien que facultatif, il est également possible de typer les variables avec le GDScript.
+```python
+var typed_var: int = 42
 ```
-- [Différence Liste et Tableau en C# - anglais](https://www.shekhali.com/c-array-vs-list)
-
-> Autre point important : Il existe une autre différence entre les listes et les tableaux en C#. Pour accéder au nombre d'éléments, on utilisera la propriété "Length", là où on utilisera la propriété "Count" pour les listes. Étrange mais c'est comme ça.
 
 ## Fonctions
 
-Outils idéaux pour limiter la réutilisation du code et le rendre plus lisible, les fonctions en C# ont une syntaxe relativement proche de ce que vous avez vu jusqu'à présent.
-```cs
-[type de retour] NomDeFonction([paramètres ([type] paramètre1), ([type] paramètre2)])
-{
-    // Instructions
-}
+Outils idéaux pour limiter la réutilisation du code et le rendre plus lisible, les fonctions en GDScript se définissent via le mot-clé "func".
+
+
+
+```python
+func nom_de_fonction([paramètres ([type] paramètre1), ([type] paramètre2)]):
+[indendation] # Instructions
 ``` 
 
-- Type de retour : le principe est le même que le type de variable sauf que c'est ce que la fonction va retourner. Si votre fonction ne doit rien retourner, on mettra la valeur "void"
-    - > Une fonction peut retourner plusieurs type à la fois, mais il est préférable de limiter vos retours de fonctions (ou méthodes) à un type à la fois
-- NomDeFonction : Comme les variables, le nom est arbitraire mais certains noms sont interdits et bien évidemment on nommera nos fonctions avec un nom explicite. A noter qu'en C# les fonctions sont écrites en PascalCase [(plus d'informations sur PascalCase)](https://tech-lib.fr/pascalcase/), par convention
-- Les paramètres : tout comme les variables, ils doivent avoir un type et sont séparés par une virgule. **Pour rappel, les paramètres d'une fonction ne sont accessibles que dans la fonction qui les définit**
+- nom_de_fonction : Comme les variables, le nom est arbitraire mais certains noms sont interdits et bien évidemment on nommera nos fonctions avec un nom explicite. A noter qu'en GDScript, par convention, les fonctions (et variables) sont écrites en snake_case [(plus d'informations sur snake_case)](https://fr.wikipedia.org/wiki/Snake_case), par convention
+- Les paramètres : ils sont infinis dans une fonction et sont séparés par une virgule. **Pour rappel, les paramètres d'une fonction ne sont accessibles que dans la fonction qui les définit**
 
 Par exemple, une fonction qui affiche dans la console la somme de deux entiers. **Elle ne renvoie rien** :
 ```cs
-void Addition(int num1, int num2)
-{
-    int sum = num1 + num2;
-    Debug.Log("Résultat somme : " + sum);
-}
+func addition(num1, num2):
+    var sum = num1 + num2
+    print(sum)
 ```
 
-> La méthode `Debug.Log()` permet d'afficher des choses dans la console d'Unity (Window > General > Console). Notez que si vous voulez afficher une chaîne de caractères dans la méthode (ou n'importe où ailleurs), **il faut impérativement utiliser des guillemets doubles (")**. Par ailleurs, toutes les instructions en C# doivent impérativement se terminer par un point-virgule (;), **il est obligatoire**.
-> - [Voir documentation de la méthode Debug.Log()](https://docs.unity3d.com/ScriptReference/Debug.Log.html) 
+> La méthode `print()` permet d'afficher des choses dans la console de Godot. Il est possible d'afficher plusieurs variables ou valeurs à la suite en les séparant par une virgule (,) ou en faisant une concaténation avec le signe plus (+).
 
 
 Voici le même exemple, mais cette fois-ci, **notre fonction retourne le résultat** :
 ```cs
-// On précise qu'on retourne un entier avec int avant le nom de la fonction
-int Addition(int num1, int num2)
-{
-    return num1 + num2;
-}
+# On précise qu'on retourne un entier avec int avant le nom de la fonction
+func addition(num1, num2):
+    var sum = num1 + num2
 
-int sum = Addition(5, 6);
-Debug.Log("Résultat somme : " + sum);
+    return sum
+
+var sum = addition(5, 6);
+print("Résultat somme : " + sum)
 ```
-On remarque qu'en plus d'avoir le mot-clé "return" dans la fonction, "void" a été remplacé par "int" car notre fonction retourne une variable de type entier (int).
 
 Dans ce document, nous n'allons pas voir les `if/else` ou encore boucles `for` ou `while` car la syntaxe est la même comparée aux autres langages que vous avez pu voir jusqu'à présent. Toutefois si vous avez un trou de mémoire, sachez que la chaîne Youtube Tuto Unity FR aborde ces sujets dans sa liste de lecture "Apprendre le C#".
 - [Voir liste de lecture sur les bases de C# par Tuto Unity FR](https://www.youtube.com/playlist?list=PLUWxWDlz8PYLKlr6F_fwCs02DH1g2hrgS) 
