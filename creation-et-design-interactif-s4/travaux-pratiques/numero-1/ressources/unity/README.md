@@ -32,6 +32,8 @@ var array_formations = ["MMI", "TC", "GE2I", "MT2E"]
 
 > Si vous souhaitez définir une constante (variable dont la valeur ne peut pas changer au cours du temps), il suffit juste de mettre "const" devant le type de la variable. Exemple : `const course = "Godot"`.
 
+Bien que facultatif, il est également possible 
+
 ### Liste ou tableau ?
 Petit point : En C# (et d'autres langages de programmation), il existe une différence entre les tableaux et les listes. Si les deux permettent de contenir un ensemble d'éléments **du même type**, il existe une subtile différence : la taille d'un tableau (array) est finie. Une fois défini, il n'est pas possible d'ajouter ou retirer des éléments à un tableau (c'est possible, mais très coûteux en performance). Alors qu'une liste a une dimension dynamique. Ce qui fait qu'une liste occupe plus de place en mémoire (RAM) qu'un tableau, de ce fait, utilisez le bon type pour la bonne situation. 
 
