@@ -1,5 +1,6 @@
 # Découverte de Godot (et du GDScript)
 // https://kidscancode.org/godot_recipes/4.x/basics/understanding_delta/index.html
+// https://docs.godotengine.org/en/stable/tutorials/scripting/gdscript/gdscript_basics.html
 Godot est un logiciel gratuit et open-source pour le développement de jeux vidéo. Comme plein d'outils du même genre, il a été pensé pour rendre accessible le développement de jeux vidéo pour tout le monde. Il se veut complet et gère une bibliothèque complète qui propose notamment la gestion de la physique ou encore de modèles 3D. Mais si ce n'est pas assez, il est possible d'ajouter de nouvelles fonctionnalités grâce au système de plugins dévelopés par la communauté.
 
 - [Accéder à la bibliothèque de plugins (AssetLib)](https://godotengine.org/asset-library/asset)
