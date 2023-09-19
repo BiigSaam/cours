@@ -44,12 +44,12 @@ Outils idéaux pour limiter la réutilisation du code et le rendre plus lisible,
 
 
 ```python
-func nom_de_fonction([paramètres ([type] paramètre1), ([type] paramètre2)]):
+func nom_de_fonction(paramètre1, paramètre2):
 [indendation] # Instructions
 ``` 
 
 - nom_de_fonction : Comme les variables, le nom est arbitraire mais certains noms sont interdits et bien évidemment on nommera nos fonctions avec un nom explicite. A noter qu'en GDScript, par convention, les fonctions (et variables) sont écrites en snake_case [(plus d'informations sur snake_case)](https://fr.wikipedia.org/wiki/Snake_case), par convention
-- Les paramètres : ils sont infinis dans une fonction et sont séparés par une virgule. **Pour rappel, les paramètres d'une fonction ne sont accessibles que dans la fonction qui les définit**
+- Les paramètres : ils sont infinis dans la signature d'une fonction et sont séparés par une virgule. **Pour rappel, les paramètres d'une fonction ne sont accessibles que dans la fonction qui les définit**
 
 Par exemple, une fonction qui affiche dans la console la somme de deux entiers. **Elle ne renvoie rien** :
 ```cs
@@ -62,43 +62,36 @@ func addition(num1, num2):
 
 
 Voici le même exemple, mais cette fois-ci, **notre fonction retourne le résultat** :
-```cs
+```python
 # On précise qu'on retourne un entier avec int avant le nom de la fonction
 func addition(num1, num2):
     var sum = num1 + num2
 
     return sum
 
-var sum = addition(5, 6);
+var sum = addition(5, 6)
 print("Résultat somme : " + sum)
 ```
 
-Dans ce document, nous n'allons pas voir les `if/else` ou encore boucles `for` ou `while` car la syntaxe est la même comparée aux autres langages que vous avez pu voir jusqu'à présent. Toutefois si vous avez un trou de mémoire, sachez que la chaîne Youtube Tuto Unity FR aborde ces sujets dans sa liste de lecture "Apprendre le C#".
-- [Voir liste de lecture sur les bases de C# par Tuto Unity FR](https://www.youtube.com/playlist?list=PLUWxWDlz8PYLKlr6F_fwCs02DH1g2hrgS) 
+Pour les structures conditionnelles type `if/else if/else`, la syntaxe differt. En GDScript, tout comme en Python, on utilise `if/elif/else` respectivement. Par exemple :
 
-> Comme les noms de variables, les noms de fonctions doivent avoir un nom unique au sein de la même classe
+```python
+if my_var < 10:
+    print("Inférieur à 10")
+elif my_var == 10 or my_var == 12:
+    print("Egal à 10 ou 12")
+else:
+    print("Autre")
+```
+> En GDScript (et Python), on préfèrera les opérateurs `and` et `or` à la place de `&&` et `||` respectivement.
+
+Il y a d'autres structures de programmation en GDScript, elles ne seront pas toutes abordées. Néanmoins, si vous avez envie de les consulter, il y a la documentation officielle
+- [Accéder à la documentation officielle du GDScript](https://docs.godotengine.org/en/stable/tutorials/scripting/gdscript/gdscript_basics.html#gdscript-reference)
 
 # Script Unity de base
 
-```cs
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class MyClass : MonoBehaviour
-{
-    // Appelée avant le premier appel de la méthode "Update"
-    void Start()
-    {
-        // Les commentaires peuvent être précédés de deux barres obliques (//) ou entre "/*" "*/". 
-        // Cette dernière façon permet de faire des commentaires sur plusieurs lignes
-    }
-
-    // Appelée une fois par frame (ou image affichée)
-    void Update()
-    {
-    }
-}
+```python
+extends Node
 ```
 Ci-dessus vous avez une classe de base, de type MonoBehavior, à chaque fois que vous allez créer un nouveau script depuis Unity, vous aurez au minimum le code ci-dessus (sans les commentaires en français). Vous pouvez bien évidemment supprimer ou ajouter des lignes en fonction de vos besoins. 
 
