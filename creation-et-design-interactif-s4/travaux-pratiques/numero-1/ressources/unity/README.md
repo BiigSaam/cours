@@ -93,6 +93,7 @@ Il y a d'autres structures de programmation en GDScript, elles ne seront pas tou
 ```python
 extends Node
 ```
+// https://docs.godotengine.org/en/stable/classes/class_node.html#class-node-method-ready
 Ci-dessus vous avez une classe de base, elle hérite de la classe Node. Dans Godot, tout élément est un Node et donc possède des méthodes suivantes qui seront appelées automatiquement par le moteur :
 - _ready : Appelée quand le `Node` ainsi que ses enfants sont prêts
 - _process : Appelée toutes les frames/images. Ainsi si votre jeu tourne à 60 images par seconde (ou fps/frames per second), ceci signifie que `_process()` sera appelée 60 fois par seconde, et ce, pour chaque script possédant la méthode `_process()`. Notez tout de même que dépendamment de la puissance de l'appareil qui exécute votre jeu, la méthode `_process()` ne sera pas forcément appelée 60 fois par seconde, ça peut être plus ou moins.
