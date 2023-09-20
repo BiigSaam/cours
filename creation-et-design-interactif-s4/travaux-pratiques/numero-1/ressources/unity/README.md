@@ -22,19 +22,21 @@ var [nom de variable]
 - nom de variable : si le nom est arbitraire, certains sont interdits et bien évidemment on nommera nos variables avec un nom explicite, c'est pratique pour s'y retrouver
 
 Voici des exemples de variables :
-```python
+```gdscript
 var annees_but = 3
 var player_name = "player1"
 
-// Un tableau de chaînes de caractères
+# Un tableau de chaînes de caractères
 var array_formations = ["MMI", "TC", "GE2I", "MT2E"]
 ```
 
 > Si vous souhaitez définir une constante (variable dont la valeur ne peut pas changer au cours du temps), il suffit juste de mettre "const" devant le type de la variable. Exemple : `const course = "Godot"`.
 
 Bien que facultatif, il est également possible de typer les variables avec le GDScript.
-```python
+```gdscript
 var typed_var: int = 42
+# Tableau d'entiers
+var scores: Array[int] = [10, 20, 30]
 ```
 
 ## Fonctions
@@ -43,7 +45,7 @@ Outils idéaux pour limiter la réutilisation du code et le rendre plus lisible,
 
 
 
-```python
+```gdscript
 func nom_de_fonction(paramètre1, paramètre2):
 [indendation] # Instructions
 ``` 
@@ -52,7 +54,7 @@ func nom_de_fonction(paramètre1, paramètre2):
 - Les paramètres : ils sont infinis dans la signature d'une fonction et sont séparés par une virgule. **Pour rappel, les paramètres d'une fonction ne sont accessibles que dans la fonction qui les définit**
 
 Par exemple, une fonction qui affiche dans la console la somme de deux entiers. **Elle ne renvoie rien** :
-```cs
+```gdscript
 func addition(num1, num2):
     var sum = num1 + num2
     print(sum)
@@ -62,7 +64,7 @@ func addition(num1, num2):
 
 
 Voici le même exemple, mais cette fois-ci, **notre fonction retourne le résultat** :
-```python
+```gdscript
 # On précise qu'on retourne un entier avec int avant le nom de la fonction
 func addition(num1, num2):
     var sum = num1 + num2
@@ -75,7 +77,7 @@ print("Résultat somme : " + sum)
 
 Pour les structures conditionnelles type `if/else if/else`, la syntaxe differt. En GDScript, tout comme en Python, on utilise `if/elif/else` respectivement. Par exemple :
 
-```python
+```gdscript
 if my_var < 10:
     print("Inférieur à 10")
 elif my_var == 10 or my_var == 12:
@@ -83,12 +85,12 @@ elif my_var == 10 or my_var == 12:
 else:
     print("Autre")
 ```
-> En GDScript (et Python), on préfèrera les opérateurs `and` et `or` à la place de `&&` et `||` respectivement.
+> En GDScript (et Python), on préfèrera les opérateurs `and` et `or` à la place de `&&` et `||` respectivement pour des questions de lisibilité.
 
 Il y a d'autres structures de programmation en GDScript, elles ne seront pas toutes abordées. Néanmoins, si vous avez envie de les consulter, il y a la documentation officielle
-- [Accéder à la documentation officielle du GDScript](https://docs.godotengine.org/en/stable/tutorials/scripting/gdscript/gdscript_basics.html#gdscript-reference)
+- [Accéder à la documentation officielle du GDScript](https://docs.godotengine.org/fr/stable/tutorials/scripting/gdscript/gdscript_basics.html#gdscript-reference)
 
-# Script Unity de base
+# Script Godot de base
 
 ```python
 extends Node
@@ -98,106 +100,62 @@ Ci-dessus vous avez une classe de base, elle hérite de la classe Node. Dans God
 - _ready : Appelée quand le `Node` ainsi que ses enfants sont prêts
 - _process : Appelée toutes les frames/images. Ainsi si votre jeu tourne à 60 images par seconde (ou fps/frames per second), ceci signifie que `_process()` sera appelée 60 fois par seconde, et ce, pour chaque script possédant la méthode `_process()`. Notez tout de même que dépendamment de la puissance de l'appareil qui exécute votre jeu, la méthode `_process()` ne sera pas forcément appelée 60 fois par seconde, ça peut être plus ou moins.
 
+> Pour des questions d'organisation, on mettra tous nos scripts dans un dossier scripts/
 
-> ~~**Le nom de classe (ici MyClass) et le nom du fichier doivent toujours correspondre (casse comprise) sinon Unity lèvera une erreur.**~~ Dans notre cas, la classe MyClass est contenue dans un fichier appelé MyClass.cs. On s'assurera qu'une classe a le même nom que le fichier.
->
-> **Pour des questions d'organisation, on mettra tous nos scripts Unity dans un dossier Scripts/ contenu lui-même dans le dossier Assets/,** ce dernier est déjà généré par Unity lorsque vous créez un nouveau projet. Notez également qu'à chaque fois que vous sauvegardez vos scripts et retournez sur Unity, il fera une vérification du code et toute erreur trouvée rendra impossible la compilation (mode `Play` ou `ctrl/cmd + p`).
+Notez également qu'à chaque fois que vous sauvegardez vos scripts, l'interpréteur vérifie ce que vous avez écrit et lèvera une erreur rendant impossible la compilation du jeu (bouton `Play` en haut à droite ou `ctrl/cmd + b`).
 
-### Déclaration de classe : `public class MyClass : MonoBehaviour`
-Cette ligne nous permet de définir notre classe. Le mot-clé `public` nous permet d'accéder à notre classe partout dans notre projet. Nous verrons plus loin dans le document que le terme "public" peut être remplacé par d'autres mot-clés. Ensuite nous avons le type, ici `class`, nous définissons donc une classe qui a pour nom "MyClass". La synaxe `: MonoBehaviour` désigne l'héritage. Autrement dit, notre classe `MyClass` possède les caractéristiques de la classe `MonoBehaviour`, c'est ce qui nous permet d'utiliser les méthodes `Start()` ou `Update()`. Car la class `MonoBehaviour` contient déjà ces méthodes avec leur comportement.
+### Déclaration de classe
+Dans GDScript bien que c'est un langage orienté objet, il est possible de travailler sans classe
 
-### Méthode : `Start() {}`
-La méthode Start() est appelée lorsque le script est instancié, autrement dit quand le GameObject apparaît dans la scène (visible ou non). Par exemple, dans un jeu vous pourriez y définir les points de vie de départ d'un personnage
+### Méthode `_ready():`
+La méthode _ready() est appelée lorsque le Node ainsi que ses enfants sont prêts, autrement dit quand le GameObject apparaît dans la scène (visible ou non). Par exemple, dans un jeu vous pourriez y définir les points de vie de départ d'un Node
 
-### Méthode : `Update() {}`
-La méthode Update est appelée toutes les frames/images. Ainsi si votre jeu tourne à 60 images par seconde (ou fps/frames per second), ceci signifie que la méthode Update() sera appelée 60 fois durant une seule et unique seconde, et ce, pour chaque script possédant la méthode `Update()`. Notez tout de même que dépendamment de la puissance de l'appareil qui exécute votre jeu, la méthode `Update()` ne sera pas forcément appelée 60 fois par seconde, ça peut être plus ou moins.
-Parallèlement, c'est dans cette méthode que vous vérifierez les touches appuyées. Par exemple :
+### Méthode `_process(delta):`
+La méthode `_process(delta)` est appelée toutes les frames/images. Ainsi si votre jeu tourne à 60 images par seconde (ou fps/frames per second), ceci signifie que la méthode `_process(delta)` sera appelée 60 fois durant une seule et unique seconde, et ce, pour chaque script possédant la méthode `_process(delta)`. Notez tout de même que dépendamment de la puissance de l'appareil qui exécute votre jeu, la méthode `_process(delta)` ne sera pas forcément appelée 60 fois par seconde, ça peut être plus ou moins.
 
-```cs
-/* [...] */
-void Update()
-{
-    // Ici on appelle le contenu du "if"
-    // quand la touche V du clavier est appuyée
-    if (Input.GetKeyDown(KeyCode.V))
-    {
-        // Mes instructions
-        Debug.Log("J'ai appuyé sur la touche V");
-    }
-}
+La méthode prend en paramètre `delta`, cette valeur représente le temps (en secondes) écoulé entre chaque rafraîchissement d'écran. Ainsi, il est très fortement conseillé d'utiliser ce paramètre lorsque vous effectuez des animations, ceci vous assure que vos animations resteront constantes, et ce, quelque soit la fréquence de rafraîchissement de votre jeu. Exemple :
+```gdscript
+# Ici on fait bouger un Node en fonction d'une vélocité (Vector2) et du temps écoulé entre deux frames
+position += velocity * delta
 ```
+
 > ** **Attention** **
 >
-> Ne mettez **jamais** une boucle `while(true) {}` (boucle infinie) dans la méthode Update car Unity plantera à coup sûr car vous faites une imbrication de boucles infinies. Ceci vous forcera également à redémarrer le logiciel et perdre votre travail si vous n'aviez pas sauvegardé.
+> Ne mettez **jamais** une boucle `while true:` (boucle infinie) dans la méthode `_process():` car Godot plantera à coup sûr car vous faites une imbrication de boucles infinies. Ceci vous forcera également à redémarrer le logiciel et perdre votre travail si vous n'aviez pas sauvegardé.
 
-Enfin, notez les choses suivantes sur les classes :
-- Les méthodes telles que `Start()` ou `Update()` sont propres à la classe `MonoBehaviour`, de ce fait, elles sont automatiquement appelées
-- Toutes les classes n'ont pas à hériter de `MonoBehaviour`
-    - Nous aurons l'occasion de réaliser des classes n'héritant pas de MonoBehaviour dans ce cours
-- Il est possible de définir plusieurs classes dans le même fichier
-- Vous pouvez définir des propriétés propres à une classe. On les met au début de la classe pour les retrouver plus facilement. Nous aurons l'occasion de voir ceci durant le cours
-- `MonoBehaviour` possède d'autres méthodes (nous en utiliseront d'autres), prenez bien en compte que ces méthodes ont un ordre d'appel
-    - [Voir ordre d'exécution des méthodes de `MonoBehaviour` (anglais)](https://docs.unity3d.com/Manual/ExecutionOrder.html)
 
 # Exercice
-Dans le but de découvrir le C#, vous allez écrire quelques lignes de code. **Retenez bien qu'Unity ne peut exécuter un script que s'il est lié à un GameObject.**
-Créez un GameObject depuis le panneau "Hierarchy" `Clic droit > Create Empty` ou encore depuis le menu `Game Object > Create Empty`. Puis dans la fenêtre "Inspector", cliquez sur "Add Component" et écrivez le nom de votre script (au choix) puis cliquez sur "New script" ensuite "Create and Add" (le script sera automatiquement ajouté au dossier `Assets/`).
+Dans le but de découvrir le GDScript, vous allez écrire quelques lignes de code. **Retenez bien que Godot ne peut exécuter un script que s'il est lié à un Node.**
+Créez un Node depuis le panneau "Scène" (en haut à gauche, par défaut) en cliquant sur l'icône "+". 
+Puis cherchez "Node" et double-cliquez dessus.
 
-![](./printscreens/add-component.jpg) 
+Ensuite sélectionnez ce nouveau Node depuis l'onglet "Scène" et cliquez sur `<vide> > Nouveau Script` dans l'onglet "Inspecteur" à droite. Une fenêtre va apparaître, renommez votre script (si vous le souhaitez) et appuyez sur "Créer".
+
+Le script sera automatiquement ajouté à la racine du projet.
 
 ---
-> Il est possible de développer en C# avec n'importe quel logiciel. Toutefois, nous vous recommendons d'utiliser un logiciel qui gère Unity, ceci vous permettra d'avoir l'auto-complétion des différentes méthodes et classes pour ainsi être plus productif.
-Si vous utilisez Visual Studio (pas VS Code, c'est différent) tout sera géré nativement après avoir installé Unity, il faut quand même sélectionner les extensions liées à Unity lors de l'installation. 
-
-Si vous souhaitez utiliser VS Code, vous devrez suivre la démarche suivante :
-- [Extension VS Code - Unity](https://devblogs.microsoft.com/visualstudio/announcing-the-unity-extension-for-visual-studio-code/)
-
-> Il ne faut en aucun cas installer le package "Visual Studio **Code** Editor", il est désuet et provoquera des conflits avec Visual Studio Code et à coup sûr, vous n'aurez pas l'auto-complétion de code. 
-
-Après avoir configuré votre IDE pour gérer C# et Unity, il faudra également indiquer à Unity que vous aller utiliser cet IDE pour développer. Pour ce faire, il faudra procéder de la façon suivante :
-- MacOS : 
-  - Cliquez sur `Unity` en haut à gauche dans la barre de statut
-  - Sélectionnez `Settings`, une fenêtre va apparaître
-  - Sélectionnez `External Tools` dans le menu à gauche 
-  - Sélectionnez la liste déroulante du choix `External Script Editor` et choissiez votre IDE (VS Code, Visual Studio, Sublime Text...) 
-- Windows :
-  - Cliquez sur le menu `Edit > Preferences`
-  - Sélectionnez `External Tools` dans le menu à gauche 
-  - Sélectionnez la liste déroulante du choix `External Script Editor` et choissiez votre IDE (VS Code, Visual Studio, Sublime Text...)
-[Plus d'informations ici](https://learn.unity.com/tutorial/set-your-default-script-editor-ide#)
-
-Si tout a bien été pris en compte, votre IDE devrait s'ouvrir si vous allez dans le menu : `Assets > Open C# Project`.
-
-~~Enfin, il vous faudra aussi installer le SDK .NET, il est disponible gratuitement sur le site de Microsoft :~~
-- ~~[Télécharger le SDK .NET](https://dot.net/core-sdk-vscode)~~
-~~Attention tout de même, dans certains cas l'installation du SDK peut mal se dérouler et vous n'aurez pas l'autocomplétion des méthodes d'Unity. Il faudra vous réferrer au lien suivant pour résoudre votre problème :~~
-- ~~[Aide sur les problèmes de SDK .NET - anglais](https://github.com/OmniSharp/omnisharp-vscode/wiki/Troubleshooting:-'The-.NET-Core-SDK-cannot-be-located.'-errors)~~
-
-Et pour vous assurer que vous avez bien l'auto-complétion des méthodes d'Unity commencez à écrire "OnColli", votre logiciel devrait vous faire des propositions dont "OnCollisionExit2D" ou "OnCollisionEnter".
-
-Si ça ne fonctionne toujours pas avec tout ça, vous pouvez tenter de résoudre votre problème en installant Mono qui est lui aussi gratuit :
-- [Télécharger Mono](https://www.mono-project.com/download/stable/#download-win)
+> Godot intègre son propre IDE, accessible en double cliquant sur un script. L'IDE intégré possède différentes options que vous pouvez trouver ailleurs comme l'auto-complétion.
 
 ---
 
-**Réalisez les tâches suivantes (n'oubliez pas de retourner le résultat et l'afficher avec la méthode `Debug.Log()`) :** 
+**Réalisez les tâches suivantes (n'oubliez pas de retourner le résultat et l'afficher avec la méthode `print()`) :** 
 - Un nombre décimal
-    - A définir dans la fonction `Start()`
+    - A définir dans la fonction `_ready()`
 - Une chaîne de caractères
-    - A définir dans la fonction `Start()`
+    - A définir dans la fonction `_ready()`
 - Un tableau contenant des nombres
-    - A définir dans la fonction `Start()`
+    - A définir dans la fonction `_ready()`
 - Une fonction qui **retourne** "Bonjour" + la chaine de caractères passée en paramètre
     - N'oubliez pas d'appeler la fonction et d'utiliser le mot-clé "return"
 - Une fonction qui **retourne** un entier passé en paramètre et le multiplie par lui-même
     - N'oubliez pas d'appeler la fonction et d'utiliser le mot-clé "return"
 - Une fonction qui fait ce que vous souhaitez mais qui est appelée quand on appuie sur une touche
-    - L'appel de la fonction devra impérativement être fait au sein de la méthode `Update()`, sinon ça ne fonctionnera pas (voir exemple plus haut)
+    - L'appel de la fonction devra impérativement être fait au sein de la méthode `_process()`, sinon ça ne fonctionnera pas (voir exemple plus haut)
     - [Documentation Unity de la liste des touches accessibles - anglais](https://docs.unity3d.com/ScriptReference/KeyCode.html)
 
-> N'oubliez pas de lier votre script à un GameObject. **Sinon, votre code ne sera jamais exécuté.**
+> N'oubliez pas de lier votre script à un Node. **Sinon, votre code ne sera jamais exécuté.**
 
-Cette petite mise en bouche n'est là que pour vous faire prendre la main sur le langage C#. Durant ce cours, nous aurons l'occasion de faire un petit jeu en 2D où nous aborderons les notions suivantes (liste non exhaustive) :
+Cette petite mise en bouche n'est là que pour vous faire prendre la main sur le langage GDScript. Durant ce cours, nous aurons l'occasion de faire un petit jeu en 2D où nous aborderons les notions suivantes (liste non exhaustive) :
 - Gestion des sprites 2D
 - Déplacement du joueur
 - Gestion du son / physique

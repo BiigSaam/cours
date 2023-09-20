@@ -11,7 +11,7 @@ const createUsers = (nbUsers) => {
   const maxAge = 65
   const result = []
 
-  for (let index = 0; index < nbUsers; index++) {
+  for (let index = 0; index < 6; index++) {
     result.push({
       age: Math.floor(Math.random() * (maxAge - minAge + 1) + minAge)
     })
