@@ -4,21 +4,20 @@
 [ext_resource type="SpriteFrames" uid="uid://duo63v5vy0lgg" path="res://Animations/Player/Player.tres" id="3_e0may"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2cto2"]
-size = Vector2(20, 26)
+size = Vector2(19, 26)
 
-[node name="Player" type="Node2D"]
-
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+[node name="Player" type="CharacterBody2D"]
+input_pickable = true
 script = ExtResource("1_nu33u")
-metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
-position = Vector2(0, 3)
-shape = SubResource("RectangleShape2D_2cto2")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
+[node name="Animator" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
 texture_filter = 1
 sprite_frames = ExtResource("3_e0may")
-animation = &"run"
+animation = &"double_jump"
 autoplay = "idle"
-frame_progress = 0.240937
+frame_progress = 0.439775
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 3)
+shape = SubResource("RectangleShape2D_2cto2")

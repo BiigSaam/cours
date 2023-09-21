@@ -160,7 +160,7 @@ Le script sera automatiquement ajouté à la racine du projet.
     - N'oubliez pas d'appeler la fonction et d'utiliser le mot-clé "return"
 - Une fonction qui fait ce que vous souhaitez mais qui est appelée quand on appuie sur une touche
     - L'appel de la fonction devra impérativement être fait au sein de la méthode `_process()`, sinon ça ne fonctionnera pas (voir exemple plus haut)
-    - [Documentation Godot sur la gestion des touches - anglais](https://docs.godotengine.org/en/stable/tutorials/inputs/input_examples.html)
+    - [Documentation Godot sur la gestion des actions utilisateur - anglais](https://docs.godotengine.org/en/stable/tutorials/inputs/input_examples.html)
 
 > N'oubliez pas de lier votre script à un Node. **Sinon, votre code ne sera jamais exécuté.**
 

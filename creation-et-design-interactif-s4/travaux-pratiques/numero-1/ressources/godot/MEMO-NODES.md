@@ -1,94 +1,18 @@
-# Mémo composants/classes
+# Mémo Nodes
 
-Dans le but de vous aider à mieux retenir le rôle des différents composants que nous avons vu jusqu'à présent, voici un document qui résume leur rôle. A noter tout de même que ce document n'est pas exhaustif et vise à mettre en lumière les points clés de ces composants. Nous vous invitons toujours à vous aider de la documentation si vous avez besoin de plus d'informations et d'exemples.
+Dans le but de vous aider à mieux retenir le rôle des différents Nodes que nous avons vu jusqu'à présent, voici un document qui résume leur rôle. A noter tout de même que ce document n'est pas exhaustif et vise à mettre en lumière les points clés de ces composants. Nous vous invitons toujours à vous aider de la documentation si vous avez besoin de plus d'informations et d'exemples.
 
-# GameObject
+# Node
 
-Objet de base de tous les éléments dans une scène Unity, le GameObject est la classe que vous utiliserez le plus. De conteneur des sprites de votre joueur à l'affichage des points de vie. Le GameObject est indispensable.
-Un GameObject est toujours embarqué avec le composant `Transform`, ce dernier gère la Position, la Rotation et l'Échelle d'un objet, pour éviter tout comportement inattendu, pensez toujours à réinitialiser (Reset) un Gameobject après avoir ajouté à votre scène, ça vous assure qu'il part de l'origine de votre scène ou de son parent.
+Élément de base de tous les éléments dans une scène Godot, le `Node` est la classe que vous utiliserez le plus (indirectement ou non). De conteneur des sprites de votre joueur à l'affichage des points de vie vous aurez besoin d'un `Node`.
+Un `Node` est toujours embarqué avec le composant `Transform`, ce dernier gère la Position, la Rotation, la Perspective et l'Échelle d'un objet, pour éviter tout comportement inattendu, pensez toujours à réinitialiser (Reset) un `Node` après avoir ajouté à votre scène, ça vous assure qu'il part de l'origine de votre scène ou de son parent.
 
-En effet, il est possible d'imbriquer un GameObject dans un autre, un peu comme vous le feriez dans Photoshop avec le système de groupes (et sous-groupes). Ce système possède plusieurs rôles :
+En effet, il est possible d'imbriquer un `Node` dans un autre, un peu comme vous le feriez dans Photoshop avec le système de groupes (et sous-groupes). Ce système possède plusieurs avantages :
 
-- Permettre à des GameObjects de se déplacer ensemble. Par exemple, un objet lié au joueur
-- Servir de "dossiers" pour grouper plusieurs GameObjects et donc organiser votre scène. En effet, un GameObject peut contenir que le composant Transform
+- Permettre à des `Nodes` de se déplacer ensemble. Par exemple, un objet lié au joueur
+- Servir de "dossiers" pour grouper plusieurs `Nodes` et donc mieux organiser votre scène
 
-En plus de pouvoir changer son nom, il est possible de changer le tag ainsi que le calque (layer) d'un GameObject.
-
-## Tag
-
-Un tag permet de récupérer un GameObject depuis n'importe quel Script. Par défaut, un GameObject n'a pas de tag, vous devez le définir via la fenêtre `Inspector`. Généralement on associera le tag "Player" aux joueurs et "Enemy" aux ennemis. Bien évidemment, vous pouvez en ajouter de nouveaux.
-
-A noter qu'il est préférable de chercher un GameObject par tag que par son nom pour des questions de performances. De plus, toujours pour des questions de performances, il est préférable de cacher le résultat de cette opération.
-
-Exemple :
-
-```c#
-// [...]
-// Bonne pratique : Le résultat de FindWithTag() est caché dans une variable
-public class ExampleClass : MonoBehaviour
-{
-    public GameObject target;
-    public Vector3 destination;
-
-    void Awake()
-    {
-        target = GameObject.FindWithTag("MyTag");
-        // [...]
-    }
-
-    void Update()
-    {
-        target.position = Vector3.Lerp(target.transform.position, destination, 0.5f * Time.deltaTime);
-    }
-}
-// ---------------
-// [...]
-// Mauvaise pratique : Le résultat de FindWithTag() calculé régulièrement
-public class ExampleClass : MonoBehaviour
-{
-    public GameObject target;
-    public Vector3 destination;
-
-    void Update()
-    {
-        target = GameObject.FindWithTag("MyTag");
-        target.position = Vector3.Lerp(target.transform.position, destination, 0.5f * Time.deltaTime);
-    }
-}
-```
-
-> Quelque soit la méthode utilisée pour récupérer un élément, si vous en avez besoin dès le lancement d'une scène, il faut utiliser la méthode `Awake` et non `Start`. Car cette dernière n'est pas appelée si votre GameObject est désactivé. [Pour en savoir plus](https://www.youtube.com/watch?v=4QdjoV63wjM).
-
-Par ailleurs, vous comparerez souvent le tag d'un GameObject avec un tag attendu, là encore, pour des questions de performances, il faudra penser à utiliser la méthode `CompareTag()` plutôt qu'une égalité stricte `==`.
-
-Exemple :
-
-```c#
-// Bonne pratique : on utilise la méthode CompareTag()
-private void OnCollisionEnter2D(Collision2D other)
-{
-    if (other.gameObject.CompareTag("Player"))
-    {
-        // Code
-    }
-}
-
-// Mauvaise pratique : on utilise l'égalité stricte
-private void OnCollisionEnter2D(Collision2D other)
-{
-    if (other.gameObject.tag == "Player")
-    {
-        // Code
-    }
-}
-```
-
-> Notez bien que la méthode `CompareTag()` est sensible à la case, conséquemment "Player" et "player" sont deux termes différents pour la méthode. Faites attention.
-
-Il existe également la méthode `Find()`, elle prend en paramètre une chaîne de caractères représentant le nom d'un GameObject dans la hierachie à partir de la racine. Si vous souhaitez récupérer un sous-élément, il faudra mettre le chemin complet, comme nous le ferions en HTML avec le chargement de ressources.
-
-Comme la méthode `FindWithTag()`, `Find()` est très coûteuse en ressource, pensez à cacher les résultats pour les réutiliser plus tard.
-
+> N'oubliez pas de changer le nom d'un Node pour le retrouver plus rapidement
 
 ## Layer (ou calque en français)
 
@@ -122,31 +46,35 @@ De ce fait, il existe les propriétés `localPosition` et `position`, la premiè
 
 Enfin sachez qu'il existe des méthodes pour convertir une position d'un espace à un autre (local/world)
 
-# Rigidbody2D
+# RigidBody2D
 
-Utilisable uniquement dans un environnement 2D, le composant Rigidbody2D soumet un GameObject au moteur physique d'Unity. Ainsi tout GameObject avec un Rigidbody2D sera donc attiré par la gravité. Ainsi, en absence de `Collider2D` un GameObject avec un Rigidbody2D fera une chute infinie. Avoir des notions de physique de base aide à mieux comprendre le comportement d'un Rigidbody2D.
+Utilisable uniquement dans un environnement 2D, le composant `Rigidbody2D` soumet un Node au moteur physique de Godot. Ainsi tout GameObject avec un `Rigidbody2D` sera donc attiré par la gravité. En absence de `CollisionShape2D` un Node fera une chute infinie. Avoir des notions de physique de base aide à mieux comprendre le comportement d'un `Rigidbody2D`.
 
-Ce composant fonctionne souvent de pair avec un `Collider2D`, donc si vous mettez un `Rigidbody2D` n'oubliez pas le `Collider2D` sur le même composant. Sinon, ça ne sert plus ou moins à rien.
+On utilisera ce composant notamment pour déplacer un élément avec la physique.
 
-Unity propose trois types de comportements pour la physique d'un élément sous la propriété `bodyType` :
+> N'utilisez pas la propriété `.position` pour déplacer vos Nodes soumis à la physique, si cela peut être tentant, ceci vous expose à la mauvaise détection des collisions entre éléments. Et par conséquent, entraîner des comportements étranges. Par exemple, traverser les murs. Il faut les déplacer grâce à la propriété "velocity".
 
-- Dynamic : Valeur par défaut. L'élément est soumis à la gravité et est affecté par les mouvements des autres. Ainsi deux GameObjects avec un Rigidbody2D Dynamic peuvent se pousser mutuellement si leur masse leur permet. Un Rigidbody2D Dynamic peut se déplacer
-- Kinematic : N'est pas soumis à la gravité ni aux forces externes (impossibilité d'être poussé). Toutefois il peut se déplacer via les propriétés `velocity` ou `angularVelocity`. Cette valeur est souvent utilisée pour réaliser des plateformes mouvantes ou tout simplement un ascenseur. Notez bien qu'un Rigidbody2D Kinematic ne peut pas interagir avec un Rigidbody2D Static ou Rigidbody2D Kinematic. Autrement dit, il les traversera en cas de contact
-- Static : Dernière valeur possible : Static. Comme son nom l'indique, un Rigidbody2D Static a pour but de rester statique. Il n'a pas été pensé pour être déplacé. Si c'est le cas, il est préférable de changer son bodyType avant de revenir à la valeur Static
+# StaticBody2D
 
-Dans certains cas, il se peut que votre `Rigidbody2D` Dynamic (avec un Collider2D) traverse des éléments alors que ce n'est pas prévu. Ceci est lié à la valeur de la propriété "collisionDetectionMode" ("Collison Detection" dans l'inspecteur), par défaut, la valeur est "Discrete" pour des questions de performances. Mais il est préférable de changer la valeur en "Continuous" pour votre joueur.
+Cousin du RigidBody2D, le `StaticBody2D` est un Node avec lequel on peut entrer en contact sans le traverser, il n'a pas vocation à bouger, on l'utilisera notamment pour réaliser des obstacles statiques.
 
-> Rappel : toute opération concernant la physique doit être placée dans la méthode `FixedUpdate()` et seulement elle. `FixedUpdate()` est synchonisée avec la fréquence du moteur physique qui est fixe et toujours appelée au même moment (environ 50 fois par seconde). Faire ceci vous assure de ne pas avoir des comportements étranges concernant la collision. Notez tout de même que si la force appliquée n'est pas continue (par exemple un saut), il est possible d'utiliser la méthode `Update()`.
+Tout comme le Rigidbody2D, le `StaticBody2D` a besoin d'un CollisionShape2D comme enfant.
 
-En bref, on appliquera un `Rigidbody2D` à un GameObject lorsqu'on souhaite qu'un objet soit soumis à la physique.
+> N'oubliez pas, un CollisionShape2D n'a pas de forme par défaut, il faudra penser à en mettre une depuis l'onglet "Inspecteur" via la propriété "Shape".
 
-Pour terminer, abordons les propriétés `gravityScale` et `mass` de la classe `Rigidbody2D`. La propriété `mass` représente la masse d'un GameObject, n'a aucune incidence sur son attraction par la gravité. La seule incidence qu'il porte est sur sa capacité à être déplacé par une force.
+# CharacterBody2D
 
-La propriété `gravityScale` définit à quel point un objet sera attiré par la gravité. **Plus cette valeur est élevée, plus le GameObject atterrira rapidement.** Par exemple, si vous souhaitez faire un jeu de tir avec la caméra au-dessus, il faudra mettre la valeur 0 pour la propriété `gravityScale`, ainsi votre GameObject ne tombera jamais.
+Si vous avez un élément physique qui doit être contrôlé par le code (joueurs et ennemies), il faudra toujours penser au `CharacterBody2D`, ce composant possède de multiples méthodes clé en main pour déplacer ce type de Node. Un `CharacterBody2D` n'est pas soumis aux règles de la physique comparé à un RigidBody2D.
 
-> N'utilisez pas la méthode `.Transform()` pour déplacer vos GameObjects, si cela peut être tentant, ceci vous expose à la mauvaise détection des collisions entre éléments. Et par conséquent, entraîner des comportements étranges. Par exemple, traverser les murs.
+Pensez à l'accompagner d'un CollisionShape2D.
 
-# Collider2D
+> A la place d'un CollisionShape2D, vous pouvez utiliser CollisionPolygon2D, ce dernier permet de faire des zones de contacts plus complexes que celles proposées par CollisionShape2D.
+
+# Area2D
+
+Ce Node permet de gérer des zones d'évènements, avertir les nodes intéressés lorsqu'un `Node` entre dedans, ça peut être, par exemple, une zone de fin de niveau. Ce composant doit impérativement avoir comme Node enfant un CollisionShape2D, sinon rien ne pourra être detecté.
+
+Pour notifier les Nodes concernés Godot utilise un système de Signals (signaux), chaque Node possède différents types de Signals accessible depuis l'onglet "Noeud > Signaux", après avoir sélectionné le Node.
 
 Composant souvent lié à un Rigidbody2D, Unity propose plusieurs types de `Collider2D`, la différence se trouve au niveau de leur forme. Ainsi un `Collider2D` peut être un carré, un cercle ou même un polygone. Cependant leur fonctionnement reste le même : permettre à un objet 2D d'exister auprès d'autres GameObject.
 
