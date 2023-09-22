@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=2 format=3 uid="uid://coe3lv8ymk13j"]
+
+[ext_resource type="Script" path="res://Data/enemy_data_blueprint.gd" id="1_882cs"]
+
+[resource]
+script = ExtResource("1_882cs")
+max_health = 2
+bounce_force = -250
