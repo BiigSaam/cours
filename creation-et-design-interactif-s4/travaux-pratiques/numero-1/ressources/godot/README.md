@@ -79,6 +79,18 @@ func addition(num1: int, num2: int) -> int:
 ```
 Mais ceci reste toujours facultatif.
 
+Une fonction peut avoir des paramètres par défaut, il suffit d'assigner une valeur à un paramètre pour qu'il soit utilisé en cas d'absence lors de l'appel.
+```gdscript
+func addition(num1: int = 10, num2 = 20):
+    var sum = num1 + num2
+
+    return sum
+
+# La fonction effectuera une addition entre 10 et 20
+var sum = addition()
+print("Résultat somme : " + sum)
+```
+
 ## Structures conditionnelles (if/elif/else)
 
 Pour les structures conditionnelles type `if/else if/else`, la syntaxe differt. En GDScript, tout comme en Python, on utilise `if/elif/else` respectivement. Par exemple :

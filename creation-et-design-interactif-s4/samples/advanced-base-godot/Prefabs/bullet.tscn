@@ -1,17 +1,45 @@
-[gd_scene load_steps=4 format=3 uid="uid://dye58ntolnly0"]
+[gd_scene load_steps=5 format=3 uid="uid://dye58ntolnly0"]
 
 [ext_resource type="Texture2D" uid="uid://be72rxkbp5my0" path="res://Imports/Arts/Plant/Bullet.png" id="1_c7mna"]
 [ext_resource type="Script" path="res://Scripts/plant_bullet.gd" id="1_m0tad"]
+[ext_resource type="Texture2D" uid="uid://csp6j7h8dsgur" path="res://Imports/Arts/Plant/Bullet Pieces.png" id="3_pe5si"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_i8ymn"]
 radius = 3.0
 
-[node name="Bullet" type="Area2D"]
+[node name="Bullet" type="RigidBody2D"]
+collision_layer = 4
+collision_mask = 3
+gravity_scale = 0.0
+max_contacts_reported = 1
+contact_monitor = true
 script = ExtResource("1_m0tad")
+speed = 250
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Core" type="Sprite2D" parent="."]
 texture_filter = 1
 texture = ExtResource("1_c7mna")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_i8ymn")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[node name="Fragment1" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("3_pe5si")
+hframes = 2
+
+[node name="Fragment2" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(8, 0)
+texture = ExtResource("3_pe5si")
+hframes = 2
+frame = 1
+
+[node name="AutoDestroy" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[connection signal="timeout" from="AutoDestroy" to="." method="_on_auto_destroy_timeout"]
