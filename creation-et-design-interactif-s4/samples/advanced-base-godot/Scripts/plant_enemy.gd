@@ -4,24 +4,23 @@ extends RigidBody2D
 @export var shoot_rate:Timer
 @export var projectile_position:Marker2D
 
-signal on_detect_area_enter(body)
+var health = 2
 
-func _on_area_2d_body_entered(body):
-#	print(body)
-	print(shoot_rate)
+#signal on_detect_area_enter(body)
+
+func _ready():
+	var shoot_area = get_node("ShootArea")
+#	shoot_area.body_entered.connect(self._on_area_2d_body_entered)
+#	shoot_area.body_exited.connect(self._on_shoot_area_body_exited)
+	shoot_rate = get_node("ShootRate")
+
+
+func _on_shoot_area_entered(body):
 	if body.is_in_group("player"):
 		shoot_rate.start()
-		
-		pass
-#	$Animator.play("shoot")
-#	print(_body)
-#	shoot_rate.start()
-#	var bullet = bullet_prefab.instantiate() as Area2D
-#
-#	add_child(bullet)
-#	on_detect_area_enter.emit(body)
 
-func _on_shoot_area_body_exited(body):
+
+func _on_shoot_area_exited(body):
 	shoot_rate.stop()
 
 func _on_animator_animation_finished(anim_name):
@@ -30,12 +29,20 @@ func _on_animator_animation_finished(anim_name):
 
 func shoot():
 	var bullet = bullet_prefab.instantiate() as RigidBody2D
-	bullet.global_position = projectile_position.global_position
+	bullet.position = projectile_position.position
+#	bullet.global_position = get_node("ProjectilePosition").global_position
+	
 	var bullet_velocity =  Vector2.LEFT * bullet.speed
 	bullet.linear_velocity = Vector2(bullet_velocity.x, 0)
 
 	# get_tree().root.get_child(0)
-	get_tree().root.get_child(0).add_child(bullet)
+	self.add_child(bullet)
 
 func _on_shoot_rate_timeout():
 	$Animator.play("shoot")
+
+
+func _on_body_entered(body):
+	print(body)
+	print(body.position.y)
+	pass # Replace with function body.

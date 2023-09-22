@@ -23,11 +23,14 @@ func _on_visible_on_screen_notifier_2d_screen_exited():
 
 
 func _on_body_entered(body):
-	$AutoDestroy.start()
+	print(body)
+#	$AutoDestroy.start()
 	linear_velocity = Vector2(0, gravity * 0.15)
 	$Core.visible = false
 	$Fragment1.visible = true
 	$Fragment2.visible = true
+	$CollisionShape2D.set_deferred("disabled", true)
+
 	if "hit" in body:
 		body.hit(damage)
 

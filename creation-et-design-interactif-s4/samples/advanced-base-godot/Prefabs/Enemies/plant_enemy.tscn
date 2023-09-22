@@ -182,6 +182,8 @@ size = Vector2(143, 25)
 [node name="PlantEnemy" type="RigidBody2D" node_paths=PackedStringArray("shoot_rate", "projectile_position")]
 collision_layer = 4
 collision_mask = 3
+max_contacts_reported = 2
+contact_monitor = true
 script = ExtResource("1_7ocpm")
 bullet_prefab = ExtResource("2_h41i1")
 shoot_rate = NodePath("ShootRate")
@@ -225,8 +227,9 @@ debug_color = Color(0.956863, 0, 0.545098, 0.419608)
 
 [node name="ShootRate" type="Timer" parent="."]
 
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="animation_finished" from="Animator" to="." method="_on_animator_animation_finished"]
 [connection signal="animation_finished" from="AnimatorOld" to="." method="_on_animator_animation_finished"]
-[connection signal="body_entered" from="ShootArea" to="." method="_on_area_2d_body_entered"]
-[connection signal="body_exited" from="ShootArea" to="." method="_on_shoot_area_body_exited"]
+[connection signal="body_entered" from="ShootArea" to="." method="_on_shoot_area_entered"]
+[connection signal="body_exited" from="ShootArea" to="." method="_on_shoot_area_exited"]
 [connection signal="timeout" from="ShootRate" to="." method="_on_shoot_rate_timeout"]
