@@ -16,7 +16,8 @@ texture_filter = 1
 sprite_frames = ExtResource("3_e0may")
 animation = &"double_jump"
 autoplay = "idle"
-frame_progress = 0.439775
+frame = 3
+frame_progress = 0.559612
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.5, 3)

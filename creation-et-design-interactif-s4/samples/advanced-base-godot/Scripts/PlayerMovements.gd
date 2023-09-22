@@ -6,6 +6,8 @@ extends CharacterBody2D
 @export var max_jump = 2
 var jump_count = 0
 
+signal foo
+
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 

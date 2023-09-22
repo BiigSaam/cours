@@ -1,0 +1,211 @@
+[gd_scene load_steps=11 format=3 uid="uid://tv2ra2fok6lt"]
+
+[ext_resource type="SpriteFrames" uid="uid://cudix5hpmltyb" path="res://Animations/PlantEnemy.tres" id="1_1wojh"]
+[ext_resource type="Script" path="res://Scripts/PlantEnemy.gd" id="1_p32of"]
+[ext_resource type="Texture2D" uid="uid://b0p3brmq622tj" path="res://Imports/Arts/Plant/Idle (44x42).png" id="2_ejs4o"]
+[ext_resource type="Texture2D" uid="uid://b7iqkxyjppyqu" path="res://Imports/Arts/Plant/Attack (44x42).png" id="3_01pk4"]
+
+[sub_resource type="Animation" id="Animation_w7kgi"]
+resource_name = "idle"
+length = 0.58
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_ejs4o")]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:hframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [11]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:vframes")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_7txc4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_ejs4o")]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:hframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [11]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:vframes")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_0bajb"]
+resource_name = "shoot"
+length = 0.8
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("3_01pk4")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:hframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [8]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gawjt"]
+_data = {
+"RESET": SubResource("Animation_7txc4"),
+"idle": SubResource("Animation_w7kgi"),
+"shoot": SubResource("Animation_0bajb")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f4tfy"]
+size = Vector2(26, 31)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fo266"]
+size = Vector2(112, 38)
+
+[node name="PlantEnemy" type="RigidBody2D" node_paths=PackedStringArray("shoot_rate")]
+collision_layer = 4
+script = ExtResource("1_p32of")
+shoot_rate = NodePath("ShootRate")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_ejs4o")
+hframes = 11
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Sprite2D")
+autoplay = "idle"
+libraries = {
+"": SubResource("AnimationLibrary_gawjt")
+}
+
+[node name="Animator" type="AnimatedSprite2D" parent="."]
+visible = false
+texture_filter = 1
+sprite_frames = ExtResource("1_1wojh")
+animation = &"shoot"
+autoplay = "idle"
+frame_progress = 0.825018
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(3, 5.5)
+shape = SubResource("RectangleShape2D_f4tfy")
+
+[node name="ProjectilePosition" type="Marker2D" parent="."]
+position = Vector2(-14, -4)
+
+[node name="ShootArea" type="Area2D" parent="."]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShootArea"]
+position = Vector2(-33, 2)
+shape = SubResource("RectangleShape2D_fo266")
+debug_color = Color(0.956863, 0, 0.545098, 0.419608)
+
+[node name="ShootRate" type="Timer" parent="."]
+
+[connection signal="animation_finished" from="Animator" to="." method="_on_animator_animation_finished"]
+[connection signal="body_entered" from="ShootArea" to="." method="_on_area_2d_body_entered"]
