@@ -30,8 +30,6 @@ func _on_body_entered(body):
 	$Fragment2.visible = true
 	if "hit" in body:
 		body.hit(damage)
-	print(body)
-
 
 func _on_auto_destroy_timeout():
 	queue_free()

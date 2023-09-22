@@ -52,5 +52,5 @@ func animation_manager():
 			%Animator.play("fall")
 
 func hit(damage):
-	
-	print("dama " + str(damage))
+	pass
+#	print("dama " + str(damage))
