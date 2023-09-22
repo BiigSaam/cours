@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://tv2ra2fok6lt"]
+[gd_scene load_steps=24 format=3 uid="uid://tv2ra2fok6lt"]
 
 [ext_resource type="Script" path="res://Scripts/plant_enemy.gd" id="1_7ocpm"]
 [ext_resource type="Texture2D" uid="uid://b0p3brmq622tj" path="res://Imports/Arts/Plant/Idle (44x42).png" id="2_ejs4o"]
 [ext_resource type="PackedScene" uid="uid://dye58ntolnly0" path="res://Prefabs/bullet.tscn" id="2_h41i1"]
 [ext_resource type="Texture2D" uid="uid://b7iqkxyjppyqu" path="res://Imports/Arts/Plant/Attack (44x42).png" id="3_01pk4"]
 [ext_resource type="Resource" uid="uid://coe3lv8ymk13j" path="res://Data/plant_enemy_data.tres" id="3_mbhg0"]
+[ext_resource type="Texture2D" uid="uid://cq4e67mu2x5aa" path="res://Imports/Arts/Plant/Hit (44x42).png" id="6_3qc6a"]
 
 [sub_resource type="Animation" id="Animation_7txc4"]
 length = 0.001
@@ -166,9 +167,51 @@ tracks/3/keys = {
 }]
 }
 
+[sub_resource type="Animation" id="Animation_esa0e"]
+resource_name = "hit"
+length = 0.45
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:hframes")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [5]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("6_3qc6a")]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_gawjt"]
 _data = {
 "RESET": SubResource("Animation_7txc4"),
+"hit": SubResource("Animation_esa0e"),
 "idle": SubResource("Animation_w7kgi"),
 "shoot": SubResource("Animation_0bajb")
 }
@@ -181,6 +224,42 @@ size = Vector2(143, 25)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ijsaq"]
 size = Vector2(26, 5)
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_rouqt"]
+animation = &"hit"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_7jibx"]
+animation = &"idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0pyyh"]
+animation = &"shoot"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qixmd"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_y2jw4"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ouemq"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_iq78t"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_w50uu"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_bt2nu"]
+states/Start/position = Vector2(148, 117)
+states/hit/node = SubResource("AnimationNodeAnimation_rouqt")
+states/hit/position = Vector2(516, 226)
+states/idle/node = SubResource("AnimationNodeAnimation_7jibx")
+states/idle/position = Vector2(516, 117)
+states/shoot/node = SubResource("AnimationNodeAnimation_0pyyh")
+states/shoot/position = Vector2(516, 12)
+transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_qixmd"), "idle", "hit", SubResource("AnimationNodeStateMachineTransition_y2jw4"), "hit", "idle", SubResource("AnimationNodeStateMachineTransition_ouemq"), "idle", "shoot", SubResource("AnimationNodeStateMachineTransition_iq78t"), "shoot", "idle", SubResource("AnimationNodeStateMachineTransition_w50uu")]
+graph_offset = Vector2(-19, -13)
 
 [node name="PlantEnemy" type="RigidBody2D" node_paths=PackedStringArray("shoot_rate", "projectile_position")]
 collision_layer = 4
@@ -232,8 +311,15 @@ collision_mask = 2
 position = Vector2(3, 7.5)
 shape = SubResource("RectangleShape2D_ijsaq")
 
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationNodeStateMachine_bt2nu")
+anim_player = NodePath("../Animator")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
 [connection signal="animation_finished" from="Animator" to="." method="_on_animator_animation_finished"]
 [connection signal="body_entered" from="ShootArea" to="." method="_on_shoot_area_entered"]
 [connection signal="body_exited" from="ShootArea" to="." method="_on_shoot_area_exited"]
 [connection signal="timeout" from="ShootRate" to="." method="_on_shoot_rate_timeout"]
 [connection signal="body_entered" from="HitArea" to="." method="_on_hit_area_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
