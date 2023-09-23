@@ -48,12 +48,14 @@ projectile_position = NodePath("../PlantEnemy/ProjectilePosition")
 
 [node name="RockHeadTriggerTopLeft" parent="Node" instance=ExtResource("5_cowdv")]
 position = Vector2(912, 463)
-
-[node name="RockHeadTriggerBottomRight" parent="Node" instance=ExtResource("5_cowdv")]
-position = Vector2(1291, 650)
+collision_mask = 2
 
 [node name="RockHeadTriggerTopRight" parent="Node" instance=ExtResource("5_cowdv")]
 position = Vector2(1291, 463)
+collision_mask = 2
+
+[node name="RockHeadTriggerBottomRight" parent="Node" instance=ExtResource("5_cowdv")]
+position = Vector2(1290, 651)
 
 [node name="RockHeadTriggerBottomLeft" parent="Node" instance=ExtResource("5_cowdv")]
 position = Vector2(912, 650)
@@ -61,11 +63,11 @@ collision_mask = 2
 
 [node name="RockHead" parent="Node" node_paths=PackedStringArray("list_triggers") instance=ExtResource("5_f52ed")]
 position = Vector2(917, 644)
-mass = 100.0
 gravity_scale = 0.0
-list_triggers = [NodePath("../RockHeadTriggerBottomRight"), NodePath("../RockHeadTriggerBottomLeft")]
+lock_rotation = true
+list_triggers = [NodePath("../RockHeadTriggerBottomRight"), NodePath("../RockHeadTriggerTopRight"), NodePath("../RockHeadTriggerTopLeft"), NodePath("../RockHeadTriggerBottomLeft")]
 
 [connection signal="on_parent_collision" from="Node/RockHeadTriggerTopLeft" to="Node/RockHead" method="_on_rock_head_trigger_on_parent_collision"]
-[connection signal="on_parent_collision" from="Node/RockHeadTriggerBottomRight" to="Node/RockHead" method="_on_rock_head_trigger_on_parent_collision"]
 [connection signal="on_parent_collision" from="Node/RockHeadTriggerTopRight" to="Node/RockHead" method="_on_rock_head_trigger_on_parent_collision"]
+[connection signal="on_parent_collision" from="Node/RockHeadTriggerBottomRight" to="Node/RockHead" method="_on_rock_head_trigger_on_parent_collision"]
 [connection signal="on_parent_collision" from="Node/RockHeadTriggerBottomLeft" to="Node/RockHead" method="_on_rock_head_trigger_on_parent_collision"]
