@@ -14,7 +14,7 @@ gravity_scale = 0.0
 max_contacts_reported = 1
 contact_monitor = true
 script = ExtResource("1_m0tad")
-speed = 250
+speed = 350
 
 [node name="Core" type="Sprite2D" parent="."]
 texture_filter = 1
@@ -27,12 +27,13 @@ shape = SubResource("CircleShape2D_i8ymn")
 
 [node name="Fragment1" type="Sprite2D" parent="."]
 texture_filter = 1
+position = Vector2(-4, 0)
 texture = ExtResource("3_pe5si")
 hframes = 2
 
 [node name="Fragment2" type="Sprite2D" parent="."]
 texture_filter = 1
-position = Vector2(8, 0)
+position = Vector2(4, 0)
 texture = ExtResource("3_pe5si")
 hframes = 2
 frame = 1

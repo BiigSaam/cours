@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="PlayerData" load_steps=2 format=3 uid="uid://pjpknir2fxre"]
+
+[ext_resource type="Script" path="res://Data/player_data_blueprint.gd" id="1_802b7"]
+
+[resource]
+script = ExtResource("1_802b7")
+max_health = 10
+current_health = 0
+speed = 300
+jump_height = -400

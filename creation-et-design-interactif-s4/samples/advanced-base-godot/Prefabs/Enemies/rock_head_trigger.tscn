@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://53anpeorrnws"]
+
+[ext_resource type="Script" path="res://Scripts/rock_head_trigger.gd" id="1_gwskg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6tlbf"]
+
+[node name="RockHeadTrigger" type="Area2D"]
+script = ExtResource("1_gwskg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_6tlbf")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

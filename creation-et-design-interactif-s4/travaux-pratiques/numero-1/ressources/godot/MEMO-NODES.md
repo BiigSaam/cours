@@ -78,3 +78,5 @@ Pour notifier les Nodes concernés Godot utilise un système de Signals (signaux
 
 
 # Signal
+
+Si vous avez déjà utilisé le patron de conception "Observer", vous êtes plus ou moins familier avec les Signals dans Godot. Ce sont des outils très puissants permettant d'émettre un évènement

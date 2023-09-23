@@ -49,13 +49,13 @@ func _on_hit_area_entered(body):
 func die():
 	set_collision_mask_value(2, false)
 	set_collision_mask_value(1, false)
+	await get_tree().create_timer(0.05).timeout
 	$EnemyCollision.set_deferred("disabled", true)
 	$HitArea.set_deferred("disabled", true)
-	$ShootArea.set_deferred("disabled", true) 
+	$ShootArea.set_deferred("disabled", true)
 	
-	apply_force(Vector2.UP * 12000)
+	apply_force(Vector2.UP * 17000)
 	rotation_degrees = 45
-
 
 func _on_visible_on_screen_notifier_2d_screen_exited():
 	if health <= 0:

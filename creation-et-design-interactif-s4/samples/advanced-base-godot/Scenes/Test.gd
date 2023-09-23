@@ -10,3 +10,7 @@ func _ready():
 func _process(delta):
 	pos.x += 5 
 	position = pos
+
+
+func _on_area_2d_area_entered(area):
+	pass # Replace with function body.

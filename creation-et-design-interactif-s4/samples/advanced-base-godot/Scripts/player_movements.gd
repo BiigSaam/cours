@@ -5,15 +5,26 @@ extends CharacterBody2D
 @export var JUMP_VELOCITY = -400.0
 @export var max_jump = 2
 @export var max_health = 20
+@export var is_facing_right = true
+
+@export var data:PlayerData
+
 var jump_count = 0
+var direction
+var animator
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 signal on_death
 
+func _ready():
+	data.current_health = data.max_health
+	animator = $Animator
+
 func _process(delta):
 	animation_manager()
+	update_facing_direction()
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -25,31 +36,35 @@ func _physics_process(delta):
 
 	# Handle Jump.
 	if Input.is_action_just_pressed("ui_accept") and jump_count < max_jump:
-		velocity.y = JUMP_VELOCITY
+		velocity.y = data.jump_height
 		jump_count += 1
 
-	var direction = Input.get_axis("left", "right")
+	direction = Input.get_axis("left", "right")
 	if direction:
-		velocity.x = direction * SPEED
+		velocity.x = direction * data.speed
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
+		velocity.x = move_toward(velocity.x, 0, data.speed)
 		
 	move_and_slide()
+	
+func update_facing_direction():
+	if (direction > 0 && !is_facing_right or direction < 0 && is_facing_right):
+		is_facing_right = !is_facing_right
+		scale.x *= -1
 	
 func animation_manager():
 	if is_on_floor():
 		if velocity.x != 0:
-			%Animator.play("run")
+			animator.play("run")
 		else:
-			%Animator.play("idle")
+			animator.play("idle")
 	else:
 		if velocity.y < 0 and jump_count == 1:
-			%Animator.play("jump")
+			animator.play("jump")
 		elif jump_count > 1 and velocity.y < 0:
-			%Animator.play("double_jump")
+			animator.play("double_jump")
 		else:
-			%Animator.play("fall")
+			animator.play("fall")
 
 func hit(damage):
-	pass
-#	print("dama " + str(damage))
+	data.current_health -= damage 

@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://bj628uvaw7keb"]
+
+[ext_resource type="Script" path="res://Scripts/rock_head.gd" id="1_52rv7"]
+[ext_resource type="Texture2D" uid="uid://bhjprobebjwmr" path="res://Imports/Arts/RockHead/Idle.png" id="1_pi4aa"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_m14lv"]
+friction = 0.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wfai1"]
+size = Vector2(32, 32)
+
+[node name="RockHead" type="RigidBody2D"]
+physics_material_override = SubResource("PhysicsMaterial_m14lv")
+max_contacts_reported = 1
+contact_monitor = true
+script = ExtResource("1_52rv7")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_pi4aa")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_wfai1")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
