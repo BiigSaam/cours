@@ -7,8 +7,9 @@
 size = Vector2(32, 32)
 
 [node name="RockHead" type="RigidBody2D"]
-max_contacts_reported = 1
+max_contacts_reported = 2
 contact_monitor = true
+can_sleep = false
 script = ExtResource("1_52rv7")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

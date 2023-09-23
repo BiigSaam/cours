@@ -4,8 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://dhk4f0hh3w22x" path="res://icon.svg" id="1_jrh12"]
 [ext_resource type="TileSet" uid="uid://big2njt6ocypf" path="res://TileSets/Landscape.tres" id="4_t815m"]
 [ext_resource type="PackedScene" uid="uid://53anpeorrnws" path="res://Prefabs/Enemies/rock_head_trigger.tscn" id="5_cowdv"]
-[ext_resource type="PackedScene" uid="uid://bj628uvaw7keb" path="res://Prefabs/Enemies/rock_head.tscn" id="5_f52ed"]
 [ext_resource type="PackedScene" uid="uid://tv2ra2fok6lt" path="res://Prefabs/Enemies/plant_enemy.tscn" id="5_sd542"]
+[ext_resource type="PackedScene" uid="uid://ctvqy170033nv" path="res://Prefabs/Enemies/rock_head_char.tscn" id="7_x58p8"]
 
 [node name="Level1" type="Node2D"]
 
@@ -61,13 +61,6 @@ position = Vector2(1290, 651)
 position = Vector2(912, 650)
 collision_mask = 2
 
-[node name="RockHead" parent="Node" node_paths=PackedStringArray("list_triggers") instance=ExtResource("5_f52ed")]
-position = Vector2(917, 644)
-gravity_scale = 0.0
-lock_rotation = true
-list_triggers = [NodePath("../RockHeadTriggerBottomRight"), NodePath("../RockHeadTriggerTopRight"), NodePath("../RockHeadTriggerTopLeft"), NodePath("../RockHeadTriggerBottomLeft")]
-
-[connection signal="on_parent_collision" from="Node/RockHeadTriggerTopLeft" to="Node/RockHead" method="_on_rock_head_trigger_on_parent_collision"]
-[connection signal="on_parent_collision" from="Node/RockHeadTriggerTopRight" to="Node/RockHead" method="_on_rock_head_trigger_on_parent_collision"]
-[connection signal="on_parent_collision" from="Node/RockHeadTriggerBottomRight" to="Node/RockHead" method="_on_rock_head_trigger_on_parent_collision"]
-[connection signal="on_parent_collision" from="Node/RockHeadTriggerBottomLeft" to="Node/RockHead" method="_on_rock_head_trigger_on_parent_collision"]
+[node name="RockHeadChar" parent="." node_paths=PackedStringArray("list_triggers") instance=ExtResource("7_x58p8")]
+position = Vector2(918, 645)
+list_triggers = [NodePath("../Node/RockHeadTriggerBottomRight"), NodePath("../Node/RockHeadTriggerTopRight"), NodePath("../Node/RockHeadTriggerTopLeft"), NodePath("../Node/RockHeadTriggerBottomLeft")]

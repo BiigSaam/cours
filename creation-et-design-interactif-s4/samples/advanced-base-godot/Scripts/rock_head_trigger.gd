@@ -17,6 +17,7 @@ func _process(delta):
 
 func _on_body_entered(body):
 	if parent == body:
+		print("name " + name)
 #		set_process(false)
 		on_parent_collision.emit()
 	
