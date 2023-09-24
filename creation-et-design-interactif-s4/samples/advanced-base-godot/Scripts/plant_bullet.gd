@@ -17,7 +17,7 @@ func _on_visible_on_screen_notifier_2d_screen_exited():
 
 func _on_body_entered(body):
 	$AutoDestroy.start()
-	linear_velocity = Vector2(0, gravity * 0.15)
+	linear_velocity = Vector2(0, gravity * 0.25)
 	$Core.visible = false
 	$Fragment1.visible = true
 	$Fragment2.visible = true

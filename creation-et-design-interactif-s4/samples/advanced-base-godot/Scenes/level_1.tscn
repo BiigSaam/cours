@@ -46,30 +46,54 @@ max_contacts_reported = 1
 shoot_rate = NodePath("../PlantEnemy/ShootRate")
 projectile_position = NodePath("../PlantEnemy/ProjectilePosition")
 
-[node name="Node" type="Node" parent="."]
+[node name="RockHeadContainer" type="Node" parent="."]
 
-[node name="RockHeadTriggerTopLeft" parent="Node" instance=ExtResource("5_cowdv")]
+[node name="RockHeadTriggerTopLeft" parent="RockHeadContainer" instance=ExtResource("5_cowdv")]
 position = Vector2(912, 463)
 collision_mask = 2
 
-[node name="RockHeadTriggerTopRight" parent="Node" instance=ExtResource("5_cowdv")]
+[node name="RockHeadTriggerTopRight" parent="RockHeadContainer" instance=ExtResource("5_cowdv")]
 position = Vector2(1291, 463)
 collision_mask = 2
 
-[node name="RockHeadTriggerBottomRight" parent="Node" instance=ExtResource("5_cowdv")]
+[node name="RockHeadTriggerBottomRight" parent="RockHeadContainer" instance=ExtResource("5_cowdv")]
 position = Vector2(1290, 651)
 
-[node name="RockHeadTriggerBottomLeft" parent="Node" instance=ExtResource("5_cowdv")]
+[node name="RockHeadTriggerBottomLeft" parent="RockHeadContainer" instance=ExtResource("5_cowdv")]
 position = Vector2(912, 650)
 collision_mask = 2
 
-[node name="RockHeadChar" parent="." node_paths=PackedStringArray("list_triggers") instance=ExtResource("7_x58p8")]
+[node name="RockHead" parent="RockHeadContainer" node_paths=PackedStringArray("list_triggers") instance=ExtResource("7_x58p8")]
 position = Vector2(918, 645)
 speed = 900
-list_triggers = [NodePath("../Node/RockHeadTriggerTopLeft"), NodePath("../Node/RockHeadTriggerTopRight"), NodePath("../Node/RockHeadTriggerBottomRight"), NodePath("../Node/RockHeadTriggerBottomLeft")]
+list_triggers = [NodePath("../RockHeadTriggerTopLeft"), NodePath("../RockHeadTriggerTopRight"), NodePath("../RockHeadTriggerBottomRight"), NodePath("../RockHeadTriggerBottomLeft")]
+
+[node name="RockHeadContainer2" type="Node" parent="."]
+
+[node name="RockHeadTriggerTopLeft" parent="RockHeadContainer2" instance=ExtResource("5_cowdv")]
+position = Vector2(912, 463)
+collision_mask = 2
+
+[node name="RockHeadTriggerTopRight" parent="RockHeadContainer2" instance=ExtResource("5_cowdv")]
+position = Vector2(1291, 463)
+collision_mask = 2
+
+[node name="RockHeadTriggerBottomRight" parent="RockHeadContainer2" instance=ExtResource("5_cowdv")]
+position = Vector2(1290, 651)
+
+[node name="RockHeadTriggerBottomLeft" parent="RockHeadContainer2" instance=ExtResource("5_cowdv")]
+position = Vector2(912, 650)
+collision_mask = 2
+
+[node name="RockHead" parent="RockHeadContainer2" node_paths=PackedStringArray("list_triggers") instance=ExtResource("7_x58p8")]
+position = Vector2(1285, 469)
+speed = 900
+list_triggers = [NodePath("../RockHeadTriggerBottomRight"), NodePath("../RockHeadTriggerBottomLeft"), NodePath("../RockHeadTriggerTopLeft"), NodePath("../RockHeadTriggerTopRight")]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(852, 626)
 zoom = Vector2(2.25, 2.25)
+
+[connection signal="body_entered" from="RockHeadContainer2/RockHeadTriggerTopLeft" to="RockHeadContainer2/RockHead" method="_on_rock_head_trigger_top_left_body_entered"]
 
 [editable path="Player"]
