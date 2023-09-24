@@ -1,12 +1,10 @@
 extends CharacterBody2D
 
-
 @export var SPEED = 300.0
 @export var JUMP_VELOCITY = -400.0
 @export var max_jump = 2
 @export var max_health = 20
 @export var is_facing_right = true
-
 @export var data:PlayerData
 
 var jump_count = 0
@@ -17,6 +15,7 @@ var cast_right
 var cast_top
 var cast_bottom
 var is_dead = false
+var is_stucked = false
 
 @onready var collision = $CollisionShape2D
 
@@ -37,11 +36,6 @@ func _process(delta):
 	animation_manager()
 	update_facing_direction()
 	
-#func _input(event):
-#	if event is InputEventKey and event.pressed:
-#		if event.scancode == KEY_T:
-#			die()
-
 func _physics_process(delta):
 	if is_dead:
 		return
@@ -56,7 +50,6 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("ui_accept") and jump_count < max_jump:
 		velocity.y = data.jump_height
 		jump_count += 1
-		die()
 
 	direction = Input.get_axis("left", "right")
 	if direction:
@@ -84,21 +77,22 @@ func update_facing_direction():
 		scale.x *= -1
 	
 func animation_manager():
-	return
-	if is_on_floor():
-		if velocity.x != 0:
-			animator.play("run")
-		else:
-			animator.play("idle")
-	elif is_dead == true:
-		return
+	if is_dead:
+		if animator.animation != "die":
+			animator.play_backwards("die")
 	else:
-		if velocity.y < 0 and jump_count == 1:
-			animator.play("jump")
-		elif jump_count > 1 and velocity.y < 0:
-			animator.play("double_jump")
+		if is_on_floor():
+			if velocity.x != 0:
+				animator.play("run")
+			else:
+				animator.play("idle")
 		else:
-			animator.play("fall")
+			if velocity.y < 0 and jump_count == 1:
+				animator.play("jump")
+			elif jump_count > 1 and velocity.y < 0:
+				animator.play("double_jump")
+			else:
+				animator.play("fall")
 
 func hit(damage):
 	data.current_health -= damage
@@ -109,5 +103,4 @@ func die():
 	on_death.emit()
 	is_dead = true
 	collision.disabled = true
-	animator.play_backwards("die")
-	print("die !")
+	print("die 2 !")

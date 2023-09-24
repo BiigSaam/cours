@@ -49,15 +49,3 @@ func change_direction():
 	current_trigger_index = (current_trigger_index + 1) % list_triggers.size()
 	enable_triggers()
 	get_next_direction(list_triggers[current_trigger_index].position)
-
-
-func _on_area_2d_body_entered(body):
-	if abs(velocity.x) > 100 or abs(velocity.y) > 100:
-		return
-		print("contact " + str(body.name))
-
-
-func _on_area_2d_body_exited(body):
-	if abs(velocity.x) > 100 or abs(velocity.y) > 100:
-		return
-		print("exit " + str(body.name))
