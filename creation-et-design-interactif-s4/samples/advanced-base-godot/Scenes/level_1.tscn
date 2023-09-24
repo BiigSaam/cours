@@ -1,11 +1,15 @@
-[gd_scene load_steps=7 format=3 uid="uid://bu8vcncawqeju"]
+[gd_scene load_steps=9 format=3 uid="uid://bu8vcncawqeju"]
 
 [ext_resource type="PackedScene" uid="uid://7vlbatqwrbi8" path="res://Prefabs/player.tscn" id="1_i4upr"]
 [ext_resource type="Texture2D" uid="uid://dhk4f0hh3w22x" path="res://icon.svg" id="1_jrh12"]
+[ext_resource type="Script" path="res://Scripts/death_zone.gd" id="3_wotvr"]
 [ext_resource type="TileSet" uid="uid://big2njt6ocypf" path="res://TileSets/Landscape.tres" id="4_t815m"]
 [ext_resource type="PackedScene" uid="uid://53anpeorrnws" path="res://Prefabs/Enemies/rock_head_trigger.tscn" id="5_cowdv"]
 [ext_resource type="PackedScene" uid="uid://tv2ra2fok6lt" path="res://Prefabs/Enemies/plant_enemy.tscn" id="5_sd542"]
 [ext_resource type="PackedScene" uid="uid://ctvqy170033nv" path="res://Prefabs/Enemies/rock_head.tscn" id="7_x58p8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4x1gg"]
+size = Vector2(54, 28)
 
 [node name="Level1" type="Node2D"]
 
@@ -20,6 +24,14 @@ position = Vector2(852, 626)
 
 [node name="RemoteTransform2D" parent="Player" index="2"]
 remote_path = NodePath("../../Camera2D")
+
+[node name="DeathZone" type="Area2D" parent="."]
+position = Vector2(813, 715)
+collision_mask = 6
+script = ExtResource("3_wotvr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone"]
+shape = SubResource("RectangleShape2D_4x1gg")
 
 [node name="TileMap" type="TileMap" parent="."]
 texture_filter = 1
@@ -94,6 +106,7 @@ list_triggers = [NodePath("../RockHeadTriggerBottomRight"), NodePath("../RockHea
 position = Vector2(852, 626)
 zoom = Vector2(2.25, 2.25)
 
+[connection signal="body_entered" from="DeathZone" to="DeathZone" method="_on_body_entered"]
 [connection signal="body_entered" from="RockHeadContainer2/RockHeadTriggerTopLeft" to="RockHeadContainer2/RockHead" method="_on_rock_head_trigger_top_left_body_entered"]
 
 [editable path="Player"]
