@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bhjprobebjwmr" path="res://Imports/Arts/RockHead/Idle.png" id="2_qn1fj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wfai1"]
-size = Vector2(32, 32)
+size = Vector2(30, 30)
 
 [node name="RockHead" type="CharacterBody2D"]
 floor_stop_on_slope = false
