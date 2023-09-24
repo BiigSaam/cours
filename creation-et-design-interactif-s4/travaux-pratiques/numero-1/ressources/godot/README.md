@@ -57,7 +57,8 @@ func addition(num1, num2):
     print(sum)
 ```
 
-> La méthode `print()` permet d'afficher des choses dans la console de Godot. Il est possible d'afficher plusieurs variables ou valeurs à la suite en les séparant par une virgule (,) ou en faisant une concaténation avec le signe plus (+).
+> La méthode `print()` permet d'afficher des choses dans la console de Godot. Il est possible d'afficher plusieurs variables ou valeurs à la suite en les séparant par une virgule (,) ou en faisant une concaténation avec le signe plus (+). Il est également possible d'utiliser des gabarits de chaînes de caractères de la façon suivante : `"Bonjour, je suis en {formation} à l'IUT de {ville} !".format({"formation":"MMI", "ville":"Sarcelles"})`
+> [Pour en savoir plus](https://docs.godotengine.org/en/stable/tutorials/scripting/gdscript/gdscript_format_string.html#format-method-examples)
 
 Voici le même exemple, mais cette fois-ci, **notre fonction retourne le résultat** :
 ```gdscript

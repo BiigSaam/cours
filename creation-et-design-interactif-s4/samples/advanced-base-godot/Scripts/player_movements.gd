@@ -16,6 +16,9 @@ var cast_left
 var cast_right
 var cast_top
 var cast_bottom
+var is_dead = false
+
+@onready var collision = $CollisionShape2D
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -33,8 +36,15 @@ func _ready():
 func _process(delta):
 	animation_manager()
 	update_facing_direction()
+	
+#func _input(event):
+#	if event is InputEventKey and event.pressed:
+#		if event.scancode == KEY_T:
+#			die()
 
 func _physics_process(delta):
+	if is_dead:
+		return
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
@@ -46,6 +56,7 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("ui_accept") and jump_count < max_jump:
 		velocity.y = data.jump_height
 		jump_count += 1
+		die()
 
 	direction = Input.get_axis("left", "right")
 	if direction:
@@ -55,30 +66,8 @@ func _physics_process(delta):
 		
 	move_and_slide()
 
-#	if (cast_left.is_colliding() and cast_right.is_colliding()):
-#		print("left: {left}, right: {right}, velocity: {velocity}!".format({"velocity": velocity, "left": cast_left.get_collider().name, "right": cast_right.get_collider().name}))
-#		print("left: {left}, right: {right}".format({
-#			"left": cast_left.get_collider().velocity if "velocity" in cast_left.get_collider() else 0, 
-#			"right": cast_right.get_collider().velocity if "velocity" in cast_right.get_collider() else 0 })
-#		)
-#	if (cast_top.is_colliding() and cast_bottom.is_colliding()):
-#		print("top: {top}, bottom: {bottom}, velocity: {velocity}!".format({"velocity": velocity, "top": cast_top.get_collider().name, "bottom": cast_bottom.get_collider().name}))
-#		print("top: {top}, bottom: {bottom}".format({
-#			"top": cast_top.get_collider().velocity.length() if "velocity" in cast_top.get_collider() else 0, 
-#			"bottom": cast_bottom.get_collider().velocity.length() if "velocity" in cast_bottom.get_collider() else 0 })
-#		)
-#	if (cast_left.is_colliding() and cast_right.is_colliding()):
-#		print("left: {left}, right: {right}, velocity: {velocity}!".format({"velocity": velocity, "left": cast_left.get_collider().name, "right": cast_right.get_collider().name}))
-		
-#		if ("velocity" in cast_bottom.get_collider()):
-#			print("ffe " + str(cast_bottom.get_collider().velocity.normalized()))
-#		if( 
-#			("velocity" in cast_top.get_collider() and cast_top.get_collider().velocity.length() == 0) or
-#			("velocity" in cast_bottom.get_collider() and cast_bottom.get_collider().velocity.length() == 0)
-#		):
-#			print("Death")	
 	if is_sides_crushing(cast_left, cast_right) or is_sides_crushing(cast_top, cast_bottom):
-			print("Death")
+			hit(100000)
 
 func is_sides_crushing(begin_cast:RayCast2D, end_cast:RayCast2D):
 	if begin_cast.is_colliding() and end_cast.is_colliding():
@@ -95,11 +84,14 @@ func update_facing_direction():
 		scale.x *= -1
 	
 func animation_manager():
+	return
 	if is_on_floor():
 		if velocity.x != 0:
 			animator.play("run")
 		else:
 			animator.play("idle")
+	elif is_dead == true:
+		return
 	else:
 		if velocity.y < 0 and jump_count == 1:
 			animator.play("jump")
@@ -109,4 +101,13 @@ func animation_manager():
 			animator.play("fall")
 
 func hit(damage):
-	data.current_health -= damage 
+	data.current_health -= damage
+	if(data.current_health <= 0):
+		die()
+	
+func die():
+	on_death.emit()
+	is_dead = true
+	collision.disabled = true
+	animator.play_backwards("die")
+	print("die !")

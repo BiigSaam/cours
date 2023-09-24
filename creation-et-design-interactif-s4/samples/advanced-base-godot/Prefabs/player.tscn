@@ -17,7 +17,7 @@ data = ExtResource("2_toixn")
 [node name="Animator" type="AnimatedSprite2D" parent="." groups=["player"]]
 texture_filter = 1
 sprite_frames = ExtResource("3_e0may")
-animation = &"idle"
+animation = &"die"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["player"]]
