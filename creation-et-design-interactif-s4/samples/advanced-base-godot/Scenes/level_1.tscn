@@ -5,7 +5,7 @@
 [ext_resource type="TileSet" uid="uid://big2njt6ocypf" path="res://TileSets/Landscape.tres" id="4_t815m"]
 [ext_resource type="PackedScene" uid="uid://53anpeorrnws" path="res://Prefabs/Enemies/rock_head_trigger.tscn" id="5_cowdv"]
 [ext_resource type="PackedScene" uid="uid://tv2ra2fok6lt" path="res://Prefabs/Enemies/plant_enemy.tscn" id="5_sd542"]
-[ext_resource type="PackedScene" uid="uid://ctvqy170033nv" path="res://Prefabs/Enemies/rock_head_char.tscn" id="7_x58p8"]
+[ext_resource type="PackedScene" uid="uid://ctvqy170033nv" path="res://Prefabs/Enemies/rock_head.tscn" id="7_x58p8"]
 
 [node name="Level1" type="Node2D"]
 
@@ -17,6 +17,9 @@ region_rect = Rect2(0, -0.5, 129, 130)
 
 [node name="Player" parent="." instance=ExtResource("1_i4upr")]
 position = Vector2(852, 626)
+
+[node name="RemoteTransform2D" parent="Player" index="2"]
+remote_path = NodePath("../../Camera2D")
 
 [node name="TileMap" type="TileMap" parent="."]
 texture_filter = 1
@@ -38,8 +41,7 @@ position = Vector2(333, 574)
 max_contacts_reported = 40
 
 [node name="PlantEnemy2" parent="." node_paths=PackedStringArray("shoot_rate", "projectile_position") instance=ExtResource("5_sd542")]
-visible = false
-position = Vector2(763, 622)
+position = Vector2(875, 359)
 max_contacts_reported = 1
 shoot_rate = NodePath("../PlantEnemy/ShootRate")
 projectile_position = NodePath("../PlantEnemy/ProjectilePosition")
@@ -63,4 +65,11 @@ collision_mask = 2
 
 [node name="RockHeadChar" parent="." node_paths=PackedStringArray("list_triggers") instance=ExtResource("7_x58p8")]
 position = Vector2(918, 645)
-list_triggers = [NodePath("../Node/RockHeadTriggerBottomRight"), NodePath("../Node/RockHeadTriggerTopRight"), NodePath("../Node/RockHeadTriggerTopLeft"), NodePath("../Node/RockHeadTriggerBottomLeft")]
+speed = 900
+list_triggers = [NodePath("../Node/RockHeadTriggerTopLeft"), NodePath("../Node/RockHeadTriggerTopRight"), NodePath("../Node/RockHeadTriggerBottomRight"), NodePath("../Node/RockHeadTriggerBottomLeft")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(852, 626)
+zoom = Vector2(2.25, 2.25)
+
+[editable path="Player"]

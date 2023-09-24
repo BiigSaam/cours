@@ -5,7 +5,7 @@
 [ext_resource type="SpriteFrames" uid="uid://duo63v5vy0lgg" path="res://Animations/Player/Player.tres" id="3_e0may"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2cto2"]
-size = Vector2(19, 26)
+size = Vector2(17, 22)
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 collision_layer = 2
@@ -21,10 +21,22 @@ animation = &"idle"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["player"]]
-position = Vector2(0.5, 3)
+position = Vector2(0.5, 5)
 shape = SubResource("RectangleShape2D_2cto2")
+debug_color = Color(0, 0, 0, 0.592157)
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(123, -89)
-zoom = Vector2(2.25, 2.25)
-position_smoothing_enabled = true
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="."]
+
+[node name="LeftCast" type="RayCast2D" parent="."]
+position = Vector2(0, 3)
+target_position = Vector2(-15, 0)
+
+[node name="RightCast" type="RayCast2D" parent="."]
+position = Vector2(0, 3)
+target_position = Vector2(16, 0)
+
+[node name="BottomCast" type="RayCast2D" parent="."]
+target_position = Vector2(0, 20)
+
+[node name="TopCast" type="RayCast2D" parent="."]
+target_position = Vector2(0, -12)

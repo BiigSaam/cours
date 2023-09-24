@@ -6,7 +6,6 @@ extends RigidBody2D
 var direction: Vector2 = Vector2.LEFT
 var has_collided = false
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
-var fra
 
 func _ready():
 	$Fragment1.visible = false

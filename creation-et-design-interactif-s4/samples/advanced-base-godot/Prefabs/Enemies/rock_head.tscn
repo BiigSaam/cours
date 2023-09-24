@@ -1,22 +1,32 @@
-[gd_scene load_steps=4 format=3 uid="uid://bj628uvaw7keb"]
+[gd_scene load_steps=5 format=3 uid="uid://ctvqy170033nv"]
 
 [ext_resource type="Script" path="res://Scripts/rock_head.gd" id="1_52rv7"]
-[ext_resource type="Texture2D" uid="uid://bhjprobebjwmr" path="res://Imports/Arts/RockHead/Idle.png" id="1_pi4aa"]
+[ext_resource type="Texture2D" uid="uid://bhjprobebjwmr" path="res://Imports/Arts/RockHead/Idle.png" id="2_qn1fj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wfai1"]
 size = Vector2(32, 32)
 
-[node name="RockHead" type="RigidBody2D"]
-max_contacts_reported = 2
-contact_monitor = true
-can_sleep = false
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g32gh"]
+size = Vector2(34, 34)
+
+[node name="RockHead" type="CharacterBody2D"]
+floor_stop_on_slope = false
+platform_wall_layers = 1
 script = ExtResource("1_52rv7")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
-texture = ExtResource("1_pi4aa")
+texture = ExtResource("2_qn1fj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_wfai1")
 
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[node name="Area2D" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_g32gh")
+debug_color = Color(0.639216, 0.52549, 0.0666667, 0.419608)
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
