@@ -16,7 +16,7 @@ size = Vector2(123.333, 116.667)
 [node name="Level1" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource("1_i4upr")]
-position = Vector2(884, 626)
+position = Vector2(311, 656)
 
 [node name="RemoteTransform2D" parent="Player" index="2"]
 remote_path = NodePath("../../Camera2D")
@@ -93,7 +93,7 @@ speed = 900
 list_triggers = [NodePath("../RockHeadTriggerBottomRight"), NodePath("../RockHeadTriggerBottomLeft"), NodePath("../RockHeadTriggerTopLeft"), NodePath("../RockHeadTriggerTopRight")]
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(884, 626)
+position = Vector2(311, 656)
 zoom = Vector2(2.25, 2.25)
 
 [node name="CurrentSceneManager" type="Node" parent="."]

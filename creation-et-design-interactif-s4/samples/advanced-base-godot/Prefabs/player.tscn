@@ -9,7 +9,7 @@
 size = Vector2(17, 22)
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
-collision_layer = 2
+collision_layer = 258
 collision_mask = 13
 input_pickable = true
 script = ExtResource("1_ena0r")
@@ -18,7 +18,7 @@ data = ExtResource("2_toixn")
 [node name="Animator" type="AnimatedSprite2D" parent="." groups=["player"]]
 texture_filter = 1
 sprite_frames = ExtResource("3_e0may")
-animation = &"die"
+animation = &"idle"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["player"]]
@@ -42,5 +42,6 @@ target_position = Vector2(0, 20)
 [node name="TopCast" type="RayCast2D" parent="."]
 target_position = Vector2(0, -12)
 
-[node name="Invulnerable" type="Node" parent="."]
+[node name="Invulnerable" type="Node" parent="." node_paths=PackedStringArray("character_body")]
 script = ExtResource("4_6gayx")
+character_body = NodePath("..")
