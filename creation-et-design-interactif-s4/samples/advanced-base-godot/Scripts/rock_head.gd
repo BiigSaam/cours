@@ -11,6 +11,9 @@ var top_raycast
 var bottom_raycast
 var left_raycast
 var right_raycast
+var animator
+
+var is_visible = false
 
 var next_position = Vector2.ZERO
 
@@ -22,6 +25,7 @@ func _ready():
 	bottom_raycast = $BottomRaycast
 	left_raycast = $LeftRaycast
 	right_raycast = $RightRaycast
+	animator = $Animator
 		
 	init_triggers()
 	enable_triggers()
@@ -46,15 +50,15 @@ func _physics_process(delta):
 	
 	if velocity.length() == 0:
 		if next_position.y < -0.5 and top_raycast.is_colliding() and last_animation_name != "hit_top":
-			$Animator.play("hit_top")
+			animator.play("hit_top")
 		elif next_position.y > 0.5 and bottom_raycast.is_colliding() and last_animation_name != "hit_bottom":
-			$Animator.play("hit_bottom")
+			animator.play("hit_bottom")
 		elif next_position.x < -0.5 and left_raycast.is_colliding() and last_animation_name != "hit_left":
-			$Animator.play("hit_left")
+			animator.play("hit_left")
 		elif next_position.x > 0.5 and right_raycast.is_colliding() and last_animation_name != "hit_right":
-			$Animator.play("hit_right")
+			animator.play("hit_right")
 	else:
-		$Animator.play("idle")
+		animator.play("idle")
 	
 func _on_rock_head_trigger_on_parent_collision():
 	change_direction()
@@ -71,13 +75,22 @@ func get_next_direction(next_trigger_pos):
 		next_position.x = 0
 
 	velocity = next_position * speed
-
+	
 func change_direction():
 	current_trigger_index = (current_trigger_index + 1) % list_triggers.size()
 	enable_triggers()
 	get_next_direction(list_triggers[current_trigger_index].position)
+	
+func on_crush():
+	if animator.animation != "idle":
+		last_animation_name = animator.animation
+		animator.play("idle")
 
 func _on_animator_animation_finished():
-	if $Animator.animation != "idle":
-		last_animation_name = $Animator.animation
-		$Animator.play("idle")
+	on_crush()
+
+func _on_visible_on_screen_notifier_2d_screen_entered():
+	is_visible = true
+
+func _on_visible_on_screen_notifier_2d_screen_exited():
+	is_visible = false
