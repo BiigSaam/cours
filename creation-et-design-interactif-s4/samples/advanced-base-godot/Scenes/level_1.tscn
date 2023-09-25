@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bu8vcncawqeju"]
+[gd_scene load_steps=10 format=3 uid="uid://bu8vcncawqeju"]
 
 [ext_resource type="PackedScene" uid="uid://7vlbatqwrbi8" path="res://Prefabs/player.tscn" id="1_i4upr"]
 [ext_resource type="Texture2D" uid="uid://dhk4f0hh3w22x" path="res://icon.svg" id="1_jrh12"]
@@ -6,15 +6,13 @@
 [ext_resource type="TileSet" uid="uid://big2njt6ocypf" path="res://TileSets/Landscape.tres" id="4_t815m"]
 [ext_resource type="PackedScene" uid="uid://53anpeorrnws" path="res://Prefabs/Enemies/rock_head_trigger.tscn" id="5_cowdv"]
 [ext_resource type="PackedScene" uid="uid://tv2ra2fok6lt" path="res://Prefabs/Enemies/plant_enemy.tscn" id="5_sd542"]
+[ext_resource type="Script" path="res://Scripts/checkpoint.gd" id="7_mjyrv"]
 [ext_resource type="PackedScene" uid="uid://ctvqy170033nv" path="res://Prefabs/Enemies/rock_head.tscn" id="7_x58p8"]
 
-[node name="Level1" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yycu2"]
+size = Vector2(123.333, 116.667)
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(-541, 572)
-texture = ExtResource("1_jrh12")
-region_enabled = true
-region_rect = Rect2(0, -0.5, 129, 130)
+[node name="Level1" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource("1_i4upr")]
 position = Vector2(884, 626)
@@ -67,9 +65,8 @@ position = Vector2(933, 654)
 collision_mask = 2
 
 [node name="RockHead" parent="RockHeadContainer" node_paths=PackedStringArray("list_triggers") instance=ExtResource("7_x58p8")]
-position = Vector2(939, 520)
+position = Vector2(938.076, 519.076)
 speed = 900
-interval = null
 list_triggers = [NodePath("../RockHeadTriggerTopLeft"), NodePath("../RockHeadTriggerTopRight"), NodePath("../RockHeadTriggerBottomRight"), NodePath("../RockHeadTriggerBottomLeft")]
 
 [node name="RockHeadContainer2" type="Node" parent="."]
@@ -90,15 +87,27 @@ position = Vector2(933, 654)
 collision_mask = 2
 
 [node name="RockHead" parent="RockHeadContainer2" node_paths=PackedStringArray("list_triggers") instance=ExtResource("7_x58p8")]
-position = Vector2(1451, 648)
+position = Vector2(1451.92, 648)
 speed = 900
-interval = null
 list_triggers = [NodePath("../RockHeadTriggerBottomRight"), NodePath("../RockHeadTriggerBottomLeft"), NodePath("../RockHeadTriggerTopLeft"), NodePath("../RockHeadTriggerTopRight")]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(884, 626)
 zoom = Vector2(2.25, 2.25)
 
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(641, 596)
+scale = Vector2(0.3, 0.3)
+collision_mask = 2
+script = ExtResource("7_mjyrv")
+
+[node name="Sprite2D" type="Sprite2D" parent="Area2D"]
+texture = ExtResource("1_jrh12")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_yycu2")
+
 [connection signal="body_entered" from="RockHeadContainer2/RockHeadTriggerTopLeft" to="RockHeadContainer2/RockHead" method="_on_rock_head_trigger_top_left_body_entered"]
+[connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]
 
 [editable path="Player"]

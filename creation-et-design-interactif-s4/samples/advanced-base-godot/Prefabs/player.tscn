@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://7vlbatqwrbi8"]
+[gd_scene load_steps=6 format=3 uid="uid://7vlbatqwrbi8"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_ena0r"]
 [ext_resource type="Resource" uid="uid://pjpknir2fxre" path="res://Data/player_data.tres" id="2_toixn"]
 [ext_resource type="SpriteFrames" uid="uid://duo63v5vy0lgg" path="res://Animations/Player/Player.tres" id="3_e0may"]
+[ext_resource type="Script" path="res://Scripts/invulnerable.gd" id="4_6gayx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2cto2"]
 size = Vector2(17, 22)
@@ -40,3 +41,6 @@ target_position = Vector2(0, 20)
 
 [node name="TopCast" type="RayCast2D" parent="."]
 target_position = Vector2(0, -12)
+
+[node name="Invulnerable" type="Node" parent="."]
+script = ExtResource("4_6gayx")

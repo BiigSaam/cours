@@ -16,6 +16,7 @@ var cast_top
 var cast_bottom
 var is_dead = false
 var is_stucked = false
+var spawn_position: Vector2
 
 @onready var collision = $CollisionShape2D
 
@@ -31,6 +32,7 @@ func _ready():
 	cast_right = $RightCast
 	cast_top = $TopCast
 	cast_bottom = $BottomCast
+	spawn_position = position
 
 func _process(delta):
 	animation_manager()
@@ -60,7 +62,7 @@ func _physics_process(delta):
 	move_and_slide()
 
 	if is_sides_crushing(cast_left, cast_right) or is_sides_crushing(cast_top, cast_bottom):
-			hit(100000)
+		hit(100000)
 
 func is_sides_crushing(begin_cast:RayCast2D, end_cast:RayCast2D):
 	if begin_cast.is_colliding() and end_cast.is_colliding():
