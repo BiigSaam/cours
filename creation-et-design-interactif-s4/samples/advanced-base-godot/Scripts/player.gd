@@ -99,7 +99,7 @@ func hit(damage):
 	if(data.current_health <= 0):
 		die()
 	else:
-		$Invulnerable.trigger(10)
+		$Invulnerable.trigger(data.invulnerable_time)
 	
 func die():
 	data.on_death.emit()
