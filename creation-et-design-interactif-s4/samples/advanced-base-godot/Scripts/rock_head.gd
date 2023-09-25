@@ -1,6 +1,9 @@
+@tool
+
 extends CharacterBody2D
 
-@export var speed:int = 750
+@export var speed:int = 700
+@export var interval:int = 2
 @export var current_trigger_index = 0
 @export var list_triggers:Array[RockHeadTrigger]
 @export var hide = false
@@ -13,9 +16,17 @@ var left_raycast
 var right_raycast
 var animator
 
-var is_visible = false
+@export var is_visible := false :
+	get:
+		return is_visible
+	set(value):
+		update_inspector(value)
 
 var next_position = Vector2.ZERO
+
+func update_inspector(_value):
+	# Do stuff
+	notify_property_list_changed()
 
 func _ready():
 	if hide:
@@ -64,7 +75,7 @@ func _on_rock_head_trigger_on_parent_collision():
 	change_direction()
 	
 func get_next_direction(next_trigger_pos):
-	await get_tree().create_timer(1.5).timeout
+	await get_tree().create_timer(interval).timeout
 	next_position = (next_trigger_pos - position)
 	next_position = next_position.normalized()
 	
