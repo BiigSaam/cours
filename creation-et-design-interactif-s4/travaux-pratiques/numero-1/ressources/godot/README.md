@@ -121,10 +121,10 @@ Ci-dessus vous avez une classe de base, elle hérite de la classe Node. Dans God
 
 > Pour des questions d'organisation, on mettra tous nos scripts dans un dossier scripts/ qui peut lui même contenir des sous-dossiers
 
-Notez également qu'à chaque fois que vous sauvegardez vos scripts, l'interpréteur vérifie ce que vous avez écrit et lèvera une erreur rendant impossible la compilation du jeu (bouton `Play` en haut à droite ou `ctrl/cmd + b`).
+Notez également qu'à chaque fois que vous sauvegardez vos scripts, l'interpréteur vérifie ce que vous avez écrit et lèvera une erreur rendant impossible la compilation du jeu (bouton `Play` en haut à droite ou `F5 / cmd + b`).
 
 ### Déclaration de classe
-Dans GDScript bien que c'est un langage orienté objet, il est possible de travailler sans classe
+Dans GDScript bien que c'est un langage orienté objet, il est possible de travailler sans nommer sa classe
 
 ### Méthode `_ready():`
 La méthode _ready() est appelée lorsque le Node ainsi que ses enfants sont prêts, autrement dit quand le GameObject apparaît dans la scène (visible ou non). Par exemple, dans un jeu vous pourriez y définir les points de vie de départ d'un Node
@@ -156,7 +156,7 @@ Ensuite sélectionnez ce nouveau Node depuis l'onglet "Scène" et cliquez sur `<
 Le script sera automatiquement ajouté à la racine du projet.
 
 ---
-> Godot intègre son propre IDE, accessible en double cliquant sur un script ou l'onglet "Script" au milieu de la fenêtre. L'IDE intégré possède différentes options que vous pouvez trouver ailleurs comme l'auto-complétion.
+> Godot intègre son propre IDE, accessible en double cliquant sur un script ou l'onglet "Script" (situé au milieu de la fenêtre). L'IDE intégré possède différentes options que vous pouvez trouver ailleurs comme l'auto-complétion.
 
 ---
 

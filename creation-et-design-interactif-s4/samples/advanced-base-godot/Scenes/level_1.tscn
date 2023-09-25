@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://bu8vcncawqeju"]
+[gd_scene load_steps=10 format=3 uid="uid://bu8vcncawqeju"]
 
 [ext_resource type="PackedScene" uid="uid://7vlbatqwrbi8" path="res://Prefabs/player.tscn" id="1_i4upr"]
+[ext_resource type="Script" path="res://Scripts/current_scene_manager.gd" id="1_ifvne"]
 [ext_resource type="Texture2D" uid="uid://dhk4f0hh3w22x" path="res://icon.svg" id="1_jrh12"]
 [ext_resource type="Script" path="res://Scripts/death_zone.gd" id="3_wotvr"]
 [ext_resource type="TileSet" uid="uid://big2njt6ocypf" path="res://TileSets/Landscape.tres" id="4_t815m"]
@@ -105,6 +106,9 @@ list_triggers = [NodePath("../RockHeadTriggerBottomRight"), NodePath("../RockHea
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(852, 626)
 zoom = Vector2(2.25, 2.25)
+
+[node name="CurrentSceneManager" type="Node" parent="."]
+script = ExtResource("1_ifvne")
 
 [connection signal="body_entered" from="DeathZone" to="DeathZone" method="_on_body_entered"]
 [connection signal="body_entered" from="RockHeadContainer2/RockHeadTriggerTopLeft" to="RockHeadContainer2/RockHead" method="_on_rock_head_trigger_top_left_body_entered"]
