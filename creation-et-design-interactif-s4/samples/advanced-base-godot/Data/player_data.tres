@@ -4,7 +4,9 @@
 
 [resource]
 script = ExtResource("1_802b7")
-max_health = 10
+max_health = 2
 current_health = 0
 speed = 300
 jump_height = -400
+max_jump = 2
+invulnerable_time = 3

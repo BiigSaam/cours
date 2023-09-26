@@ -45,3 +45,5 @@ target_position = Vector2(0, -12)
 [node name="Invulnerable" type="Node" parent="." node_paths=PackedStringArray("character_body")]
 script = ExtResource("4_6gayx")
 character_body = NodePath("..")
+
+[node name="Movement" type="Node" parent="."]

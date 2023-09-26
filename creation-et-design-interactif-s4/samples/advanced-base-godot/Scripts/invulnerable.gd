@@ -17,7 +17,7 @@ func delay(duration):
 
 func blink():
 	while is_invulnerable:
-		await get_tree().create_timer(0.2).timeout
+		await get_tree().create_timer(0.1).timeout
 		character_body.modulate.a = 0.5
-		await get_tree().create_timer(0.2).timeout
+		await get_tree().create_timer(0.1).timeout
 		character_body.modulate.a = 1

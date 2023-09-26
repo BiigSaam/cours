@@ -5,6 +5,8 @@ extends CharacterBody2D
 @export var is_facing_right = true
 @export var data:PlayerData
 
+@export var player_movement:PlayerMovement
+
 var jump_count = 0
 var direction
 var animator
@@ -36,8 +38,9 @@ func _process(delta):
 	update_facing_direction()
 	
 func _physics_process(delta):
-	if is_dead:
-		return
+#	if is_dead:
+#		return
+
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
@@ -56,7 +59,7 @@ func _physics_process(delta):
 		velocity.x = direction * data.speed
 	else:
 		velocity.x = move_toward(velocity.x, 0, data.speed)
-		
+
 	move_and_slide()
 
 	if is_sides_crushing(cast_left, cast_right) or is_sides_crushing(cast_top, cast_bottom):
@@ -79,6 +82,7 @@ func update_facing_direction():
 func animation_manager():
 	if is_dead:
 		if animator.animation != "die":
+			print("anim")
 			animator.play_backwards("die")
 	else:
 		if is_on_floor():
@@ -103,6 +107,10 @@ func hit(damage):
 	
 func die():
 	data.on_death.emit()
+	set_collision_layer_value(9, false)
+	set_collision_layer_value(2, false)
 	is_dead = true
+	set_process_input(!is_dead)
+#	set_physics_process(!is_dead)
 	collision.disabled = true
 	print("die 2 !")
