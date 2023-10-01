@@ -144,3 +144,5 @@ tmp/
 creation-et-design-interactif-s4/travaux-pratiques/Scripts/*
 
 .vs/
+
+**/exports/**

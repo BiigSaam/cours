@@ -38,9 +38,6 @@ func _process(delta):
 	update_facing_direction()
 	
 func _physics_process(delta):
-#	if is_dead:
-#		return
-
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
@@ -55,10 +52,14 @@ func _physics_process(delta):
 		jump_count += 1
 
 	direction = Input.get_axis("left", "right")
+
 	if direction:
 		velocity.x = direction * data.speed
 	else:
 		velocity.x = move_toward(velocity.x, 0, data.speed)
+		
+	if is_dead:
+		velocity = Vector2.ZERO
 
 	move_and_slide()
 
@@ -82,7 +83,6 @@ func update_facing_direction():
 func animation_manager():
 	if is_dead:
 		if animator.animation != "die":
-			print("anim")
 			animator.play_backwards("die")
 	else:
 		if is_on_floor():
@@ -109,8 +109,9 @@ func die():
 	data.on_death.emit()
 	set_collision_layer_value(9, false)
 	set_collision_layer_value(2, false)
+	
 	is_dead = true
-	set_process_input(!is_dead)
+#	set_process_input(false)
 #	set_physics_process(!is_dead)
 	collision.disabled = true
 	print("die 2 !")

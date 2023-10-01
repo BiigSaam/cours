@@ -23,33 +23,28 @@ size = Vector2(754, 28)
 
 [node name="Level1" type="Node2D"]
 
-[node name="TextureRect" type="TextureRect" parent="." node_paths=PackedStringArray("follow")]
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("follow")]
+position = Vector2(61, 605)
+zoom = Vector2(2.25, 2.25)
+script = ExtResource("3_53mva")
+follow = NodePath("../Player")
+
+[node name="TextureRect" type="TextureRect" parent="Camera2D"]
 material = SubResource("ShaderMaterial_3ue0i")
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 28.0
-offset_top = 466.0
-offset_right = 606.0
-offset_bottom = 791.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -33.0
+offset_top = -375.0
+offset_right = 866.0
+offset_bottom = 186.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("9_u816r")
 stretch_mode = 1
-script = ExtResource("3_53mva")
-follow = NodePath("../Camera2D")
-
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(-75, 605)
-zoom = Vector2(2.25, 2.25)
 
 [node name="Player" parent="." instance=ExtResource("1_i4upr")]
 position = Vector2(-75, 605)
-
-[node name="RemoteTransform2D" parent="Player" index="2"]
-remote_path = NodePath("../../Camera2D")
 
 [node name="TileMap" type="TileMap" parent="."]
 texture_filter = 1
@@ -131,6 +126,10 @@ script = ExtResource("1_ifvne")
 
 [node name="DeathZone2" parent="DeathZones" instance=ExtResource("3_1obwp")]
 position = Vector2(1738, 715)
+
+[node name="DeathZone4" parent="DeathZones" instance=ExtResource("3_1obwp")]
+position = Vector2(3071, 664)
+scale = Vector2(7.76, 1)
 
 [node name="DeathZone3" type="Area2D" parent="DeathZones"]
 position = Vector2(-679, 711)

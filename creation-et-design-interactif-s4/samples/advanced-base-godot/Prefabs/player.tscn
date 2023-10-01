@@ -8,12 +8,13 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2cto2"]
 size = Vector2(17, 22)
 
-[node name="Player" type="CharacterBody2D" groups=["player"]]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("player_movement") groups=["player"]]
 collision_layer = 258
 collision_mask = 13
 input_pickable = true
 script = ExtResource("1_ena0r")
 data = ExtResource("2_toixn")
+player_movement = NodePath("")
 
 [node name="Animator" type="AnimatedSprite2D" parent="." groups=["player"]]
 texture_filter = 1
@@ -45,5 +46,3 @@ target_position = Vector2(0, -12)
 [node name="Invulnerable" type="Node" parent="." node_paths=PackedStringArray("character_body")]
 script = ExtResource("4_6gayx")
 character_body = NodePath("..")
-
-[node name="Movement" type="Node" parent="."]
